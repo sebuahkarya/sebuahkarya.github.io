@@ -1,7 +1,389 @@
-<html>
-	<head>
-	</head>
-	<body>
-		AJISAKA
-	</body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Menu Utama</title>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" type="text/css" href="plugins/bootstrap/css/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="plugins/fontawesome/css/all.css">
+  
+  <style type="text/css">
+    .btn-widget
+    {
+      position: fixed;
+      z-index: 999999;
+      bottom: 16px;
+      right: 16px;
+      padding: 0px 4px;
+      width: 64px;
+      height: 64px;
+      text-align: center;
+      border-radius: 50%;
+      color: white;
+      user-select: none;
+      background: #039BE5;
+      line-height: 64px;
+      font-size: 14px;
+      font-weight: bold;
+      border: dashed 1px white;
+      -webkit-box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.75);
+      -moz-box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.75);
+      box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.75);
+      transition: 0.5s;
+    }
+
+    .btn-widget:hover
+    {
+      -webkit-box-shadow: 0px 0px 8px 0px rgba(0,120,215,0.75);
+      -moz-box-shadow: 0px 0px 8px 0px rgba(0,120,215,0.75);
+      box-shadow: 0px 0px 8px 0px rgba(0,0,120,215.75);
+      transform: scale(1.05);
+       border: solid 1px white;
+      transition: 0.2s;
+    }
+
+    .bg-widget
+    {
+      visibility: hidden;
+      /* display: block; */
+      background: rgba(0,0,0,0.65);
+      transition: 0.2s;
+      top: -100%;
+      left: 0px;
+      z-index: -999999;
+    }
+
+    .bg-widget-visible
+    {
+      visibility: visible;
+      /* background: rgba(255,255,255,1); */
+      /* background: #039BE5; */
+      background: linear-gradient(#039BE5, #14acf6);
+      position: fixed;
+      top: 0px;
+      left: 0px;
+      width: 100%;
+      height: 75%;
+      z-index: 9999999;
+      overflow: auto;
+      padding: 16px;
+      padding-top: 32px;
+      transition: 0.2s; 
+      color: black;
+    }
+
+    .sunflower
+    {
+      position: fixed;
+      bottom: -100%;
+      width: 100%;
+      text-align: center;
+      height: 25%;
+      visibility: hidden;
+      transition: 0.2s; 
+    }
+
+    .sunflower-visible
+    {
+      visibility: visible;
+      z-index: 999999999;
+      bottom: 0px;
+      /* background: #039BE5; */
+      background: linear-gradient(#14acf6, #25bdf7);
+      transition: 0.2s; 
+    }
+
+    .sunflower img
+    {
+      height: 100%;
+      width: auto;
+    }
+
+  </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-md bg-primary navbar-dark fixed-top">
+  <a class="navbar-brand" href="#">Kalkulator+</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="collapsibleNavbar">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="index.html">Menu Utama</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="settings.html">Pengaturan</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="about.html">Tentang Aplikasi</a>
+      </li>    
+    </ul>
+  </div>  
+</nav>
+<!-- searchbar untuk menu -->
+<div class="container" style="margin-top: 5rem">
+    <div class="input-group">
+    <input type="text" class="txt-search form-control" name="" placeholder="cari" id="cari-menu">   
+    <div class="input-group-append">
+      <button id="Btn-ClearSearch" class="btn btn-danger">X</button>
+    </div>  
+    </div>
+    <p></p>
+    <div class="btn-group text-center m-auto" role="group">
+      <button type="button" class="btn btn-primary" id="sortAZ">Sortir <i class="fa fa-sort-alpha-down"></i></button>
+      <button type="button" class="btn btn-primary" id="sortZA">Sortir <i class="fa fa-sort-alpha-up-alt"></i></button>
+    </div>
+</div>
+
+<!-- pemberi jarak antara searchbar dengan menu -->
+<!-- menu -->
+<div class="container MenuKalkulator">
+
+  <div class="MenuKalkulatorItem card my-2" data-name="Kalkulator Sederhana">
+    <div class="card-body">
+     <a class="stretched-link"  href="calc-sederhana.html">Kalkulator Sederhana</a>
+    </div>
+  </div>
+   
+  <div class="MenuKalkulatorItem card my-2" data-name="Kalkulator Diskon">
+    <div class="card-body">
+	   <a class="stretched-link"  href="calc-diskon.html">Kalkulator Diskon</a>
+    </div>
+  </div>
+
+  <div class="MenuKalkulatorItem card my-2" data-name="Kalkulator Expert">
+    <div class="card-body">
+      <a class="stretched-link" href="calc-expert.html">Kalkulator Expert</a>
+    </div>
+  </div>
+
+ <div class="MenuKalkulatorItem card my-2" data-name="Ganjil Genap">
+    <div class="card-body">
+	   <a class="stretched-link" href="calc-ganjil-genap.html">Ganjil Genap</a>
+    </div>
+  </div>
+
+  <div class="MenuKalkulatorItem card my-2" data-name="Faktorial">
+    <div class="card-body">
+	   <a class="stretched-link" href="calc-faktorial.html">Faktorial</a>
+    </div>
+  </div>
+
+  <div class="MenuKalkulatorItem card my-2" data-name="Meteran">
+    <div class="card-body">
+	   <a class="stretched-link" href="calc-meteran.html">Meteran</a>
+    </div>
+  </div>
+
+  <div class="MenuKalkulatorItem card my-2" data-name="Peningkatan">
+    <div class="card-body">
+	   <a class="stretched-link" href="calc-peningkatan.html">Peningkatan</a>
+    </div>
+  </div>
+
+  <div class="MenuKalkulatorItem card my-2" data-name="Nomor Acak">
+    <div class="card-body">
+	   <a class="stretched-link" href="calc-nomor-acak.html">Nomor Acak</a>
+    </div>
+ </div>
+
+  <div class="MenuKalkulatorItem card my-2" data-name="Keranjang Belanja">
+    <div class="card-body">     
+	   <a class="stretched-link" href="calc-keranjang-belanja.html">Keranjang Belanja</a>
+    </div>
+ </div>
+
+  <div class="MenuKalkulatorItem card my-2" data-name="Grade & Nilai">
+    <div class="card-body">
+      <a class="stretched-link" href="calc-grade-dan-nilai.html">Grade & Nilai</a>
+    </div>
+ </div>
+
+  <div class="MenuKalkulatorItem card my-2" data-name="Mead, Median, & Modus">
+    <div class="card-body">
+      <a class="stretched-link" href="calc-mean-median-modus.html" >Mean, Median, & Modus</a>
+    </div>
+ </div>
+
+  <div class="MenuKalkulatorItem card my-2" data-name="Perpangkatan">
+    <div class="card-body">
+      <a class="stretched-link" href="calc-perpangkatan.html">Perpangkatan</a>
+    </div>
+ </div>
+
+  <div class="MenuKalkulatorItem card my-2" data-name="Akar Kuadrat">
+    <div class="card-body">      
+      <a class="stretched-link" href="calc-akar-kuadrat.html">Akar Kuadrat</a>
+    </div>
+ </div>
+
+  <div class="MenuKalkulatorItem card my-2" data-name="Tabel Perkalian">
+    <div class="card-body">
+      <a class="stretched-link" href="calc-tabel-perkalian.html">Tabel Perkalian</a>
+    </div>
+ </div>
+
+  <div class="MenuKalkulatorItem card my-2" data-name="String / Password Generator">
+    <div class="card-body">      
+      <a class="stretched-link" href="calc-stringpasswd-generator.html">String / Password Generator</a>
+    </div>
+ </div>
+
+</div>
+
+<div class="btn-widget" id="btn-widget">
+  widget
+</div>
+
+<div class="bg-widget">
+  <div class="container-center" style="background: transparent;">
+    <div id="widget-clock" style="color:white; font-size: 1.2em;"></div>
+  </div>
+</div>
+<div class="sunflower">
+<img src="sekar-info/sunflower.png" alt="">
+</div>
+</body>
+<script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+<script type="text/javascript" src="plugins/jquery/jquery.js"></script>
+<script type="text/javascript" src="plugins/popperjs/popper.js"></script>
+<script type="text/javascript" src="plugins/bootstrap/js/bootstrap.js"></script>
+<script type="text/javascript" src="scripts/framelessmenu.js"></script>
+<script type="text/javascript">
+$(document).ready(function()
+{
+  // sortaz();
+  SortAZ();
+  startTime();
+}
+);
+
+$(document).ready(function()
+{
+  mainmenuscrollx = sessionStorage.getItem('mainmenuscrollx');
+  mainmenuscrolly = sessionStorage.getItem('mainmenuscrolly');
+  window.scrollTo(mainmenuscrollx, mainmenuscrolly);
+}
+);
+
+function startTime() {
+  var hari_id = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Saturday'];
+  var bulan_id = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+  var today = new Date();
+  var h = today.getHours();
+  var m = today.getMinutes();
+  var s = today.getSeconds();
+  var ms = today.getMilliseconds();
+  var day, month, year;
+  day = today.getDate();
+  month = today.getMonth()+1;
+  year = today.getFullYear();
+  h = checkTime(h);
+  m = checkTime(m);
+  s = checkTime(s);
+  ms =  checkTime(ms);
+  // $('#widget-clock').html( "Tanggal: " + hari_id[today.getDay()] + ", " + day + " " + bulan_id[month-1] + " " + year + " <br> " + "Waktu: " + h + ":" + m + ":" + s+":"+ms);
+  $('#widget-clock').html( "Tanggal: " + hari_id[today.getDay()] + ", " + day + " " + bulan_id[month-1] + " " + year + " <br> " + "Waktu: " + h + ":" + m + ":" + s);
+  var t = setTimeout(startTime, 100);
+}
+
+function checkTime(i) {
+  if (i < 10) {i = "0" + i};
+  return i;
+}
+
+function SortAZ()
+{
+  var $MenuKalkulator = $('.MenuKalkulator');
+
+  $MenuKalkulator.find('.MenuKalkulatorItem').sort(function (a, b) {
+      return (a.dataset.name < b.dataset.name) ? -1 : (a.dataset.name > b.dataset.name) ? 1 : 0;
+  })
+  .appendTo( $MenuKalkulator );
+}
+
+
+function SortZA() {
+  var $MenuKalkulator = $('.MenuKalkulator');
+
+  $MenuKalkulator.find('.MenuKalkulatorItem').sort(function (a, b) {
+      return (a.dataset.name < b.dataset.name) ? +1 : (a.dataset.name > b.dataset.name) ? 1 : 0;
+  })
+  .appendTo( $MenuKalkulator );
+}
+
+function SortSearch()
+{
+  var i;
+  var mencari = $('#cari-menu').val().toUpperCase();
+  var menucount = $('.MenuKalkulator .MenuKalkulatorItem').length;
+  for (i=0;i<menucount;i++)
+  {
+
+    if ($('.MenuKalkulator .MenuKalkulatorItem:eq('+i+')').text().toUpperCase().indexOf(mencari)>-1)
+    {
+      $('.MenuKalkulator .MenuKalkulatorItem:eq('+i+')').css('display', 'block');
+    }
+    else
+    {
+      $('.MenuKalkulator .MenuKalkulatorItem:eq('+i+')').css('display', 'none');
+    }
+  }
+}
+
+
+$('#cari-menu').on('input change click', function()
+{
+  SortSearch();
+});
+
+$('#Btn-ClearSearch').on('click', function()
+{
+    $('#cari-menu').val("");
+    SortSearch();
+}
+);
+
+$('#sortAZ').on('click', function()
+{
+    SortAZ();
+}
+);
+
+$('#sortZA').on('click', function()
+{
+    SortZA();
+}
+);
+
+$('#btn-widget').on('click', function()
+{
+    $('.bg-widget').toggleClass('bg-widget-visible');
+    $('.sunflower').toggleClass('sunflower-visible');
+}
+);
+
+$('.bg-widget').on('click', function()
+{
+    $('.bg-widget').toggleClass('bg-widget-visible');
+    $('.sunflower').toggleClass('sunflower-visible');
+}
+);
+
+$('.sunflower').on('click', function()
+{
+    $('.bg-widget').toggleClass('bg-widget-visible');
+    $('.sunflower').toggleClass('sunflower-visible');
+}
+);
+
+$(window).on('scroll', function()
+  {
+    var mainmenuscrollx = window.scrollX;
+    var mainmenuscrolly = window.scrollY;
+    sessionStorage.setItem('mainmenuscrollx', mainmenuscrollx);
+    sessionStorage.setItem('mainmenuscrolly', mainmenuscrolly);
+  });
+</script>
 </html>

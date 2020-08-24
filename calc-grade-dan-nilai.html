@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Grade & Nilai</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="css/index.css">
+	<link rel="stylesheet" type="text/css" href="fontawesome/css/all.css">
+	<script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+	<script type="text/javascript" src="jquery/jquery.js"></script>
+</head>
+<body>
+	<div class="header-dragable"></div>
+<div class="header">
+	<div class="header-title">Grade & Nilai</div>
+	<a class="header-back-button" href="index.html">Kembali</a>
+</div>
+<div class="container" style="margin-top: 64px;">
+Nama Grade<br>
+<input type="text" class="input-large" name="" id="inp-grade-name">
+<p></p>
+Deskripsi Grade<br>
+<input type="text" class="input-large" name="" id="inp-grade-description">
+<p></p>
+<button id="btn-insert-grade" class="button1-full">Tambahkan</button>
+<p></p>
+<div class="container-hasil">
+<div style="font-size:1.05em; font-weight: bold;"><u>Tabel Grade</u></div><br>
+<table id="table-grade">
+	<tbody>
+		<tr>
+			<th class="align-text">Nama Grade</th>
+			<th class="align-text">Deskripsi Grade</th>
+			<th class="align-number">Pilihan</th>
+		</tr>
+	</tbody>
+</table>
+</div>
+<p></p>
+Nilai Terendah<br>
+<input type="number" class="input-large" id="inp-nilai-terendah" name="">
+<p></p>
+Nilai Tertinggi<br>
+<input type="number" class="input-large" id="inp-nilai-tertinggi" name="">
+<p></p>
+<button id="btn-generate-nilai" class="button1-full">Generate Nilai</button>
+<p></p>
+<div class="container-hasil">
+<div style="font-size:1.05em; font-weight: bold;"><u>Tabel Nilai</u></div><br>
+<table id="table-nilai">
+	<tbody>
+		<tr>
+			<th class="align-text">Nama Grade</th>
+			<th class="align-text">Deskripsi Grade</th>
+			<th class="align-number">Kisaran Nilai</th>
+		</tr>
+	</tbody>
+</table>
+</div>
+</div>
+<script type="text/javascript">
+
+	function generatenilai()
+	{
+		var i=0;
+		var nilai_terendah = parseFloat($('#inp-nilai-terendah').val());
+		var nilai_tertinggi = parseFloat($('#inp-nilai-tertinggi').val());
+		var baris_table_grade = parseInt($('#table-grade tbody tr').length-1);
+		var pembagian_nilai = baris_table_grade;
+		for(i=$('#table-grade tbody tr').length;i>=1;i--)
+		{
+			$('#table-nilai tbody tr:eq('+i+')').remove();
+		}
+		for(i=1;i<=baris_table_grade;i++)
+		{
+			grade_name = $('#table-grade tbody tr:eq('+i+')').find('.grade_name').text();
+			grade_description = $('#table-grade tbody tr:eq('+i+')').find('.grade_description').text();
+			grade_nilai_awal = nilai_terendah + (((nilai_tertinggi - nilai_terendah)*(pembagian_nilai-1))/baris_table_grade);
+			grade_nilai_akhir = nilai_terendah + (((nilai_tertinggi - nilai_terendah)*pembagian_nilai)/baris_table_grade);
+			grade_nilai_total = grade_nilai_awal + ' - ' + grade_nilai_akhir;
+			pembagian_nilai-=1;
+			$('#table-nilai tbody').append('<tr><td class="grade_name align-text">'+grade_name+'</td><td class="grade_description align-text">'+grade_description+'</td><td class="grade_nilai align-number">'+grade_nilai_total+'</td></tr>');
+		}
+	}
+
+	$('#btn-insert-grade').on('click', function()
+	{
+		var grade_name = $('#inp-grade-name').val();
+		var grade_description = $('#inp-grade-description').val();
+		$('#table-grade tbody').append('<tr><td class="grade_name" contenteditable="true">'+grade_name+'</td><td class="grade_description" contenteditable="true">'+grade_description+'</td><td><button style="float:right;" class="button2 hapus">hapus</button></td></tr>');
+		if(($('#inp-nilai-terendah').val()!='') && ($('#inp-nilai-tertinggi').val()!=''))
+		{
+		generatenilai();
+		}
+	});
+
+	$('#table-grade tbody').on('change input', '.grade_name', function()
+	{
+		generatenilai();
+	}
+	);
+
+	$('#table-grade tbody').on('change input', '.grade_description', function()
+	{
+		generatenilai();
+	}
+	);
+
+	$('#btn-generate-nilai').on('click', function()
+	{
+		if(($('#inp-nilai-terendah').val()!='') && ($('#inp-nilai-tertinggi').val()!=''))
+		{
+		generatenilai();
+		}
+	});
+
+	$(document).on('click', '.hapus', function()
+	{
+		this.closest('tr').remove();
+		if(($('#inp-nilai-terendah').val()!='') && ($('#inp-nilai-tertinggi').val()!=''))
+		{
+		generatenilai();
+		}
+	}
+	);
+
+	$('#inp-nilai-terendah').on('input change', function()
+	{
+		generatenilai();
+	}
+	);
+
+	$('#inp-nilai-tertinggi').on('input change', function()
+	{
+		generatenilai();
+	}
+	);
+</script>
+</body>
+</html>

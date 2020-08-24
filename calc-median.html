@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Median/Nilai Tengah</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="css/index.css">
+	<link rel="stylesheet" type="text/css" href="fontawesome/css/all.css">
+	<script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+	<script type="text/javascript" src="jquery/jquery.js"></script>
+	<style>
+		.median-box
+		{
+			padding: 8px;
+			border: solid 1px #999;
+			border-radius: 4px;
+			margin: 8px;
+			user-select: none;
+		}
+	</style>
+</head>
+<body>
+	<div class="header-dragable"></div>
+<div class="header">
+	<div class="header-title">Median/Nilai Tengah</div>
+	<a class="header-back-button" href="index.html">Kembali</a>
+</div>
+<div class="container" style="margin-top: 64px;">
+	Masukkan Nilai<br>
+	<input type="number" class="input-large" name="" id="nilai">
+	<p></p>
+	<button type="button" id="tambahkan" class="button1-full">Tambah</button>
+</div>
+<div class="container-flex" id="median-container" style="border:solid 0px #eee; border-radius: 4px;">
+	
+</div>
+<div class="container" id="info" style="padding: 16px; border-top: 2px #999 solid; margin: 0px;">
+	
+</div>
+<script type="text/javascript">
+
+	function sortnilai()
+	{
+		var arrayofnumbers = [];
+		var i =0;
+		var jumlahmedian = $('#median-container .median-box').length;
+		for(i=0;i<jumlahmedian;i++)
+		{
+			arrayofnumbers[i] = $('#median-container .median-box:eq('+i+')').text();
+		}
+		arrayofnumbers.sort(function(a, b){return a-b});
+		//alert(arrayofnumbers);
+		$('#median-container').text('');
+		for(i=0;i<arrayofnumbers.length;i++)
+		{
+			$('#median-container').append('<div class="median-box"><div>'+arrayofnumbers[i]+'</div></div>');
+		}
+		var urutanmedian = 0;
+		var nilaimedian = 0;
+		if(arrayofnumbers.length%2==1)
+		{
+			urutanmedian = (arrayofnumbers.length/2)-0.5;
+			nilaimedian = arrayofnumbers[(arrayofnumbers.length/2)-0.5];
+			$('#info').text('Median = ' + nilaimedian);
+			$('#median-container .median-box:eq('+urutanmedian+')').css('border','solid 2px #0078D7');
+		}
+		else if(arrayofnumbers.length%2==0)
+		{
+			urutanmedianawal = (arrayofnumbers.length/2)-1;
+			urutanmedianakhir = (arrayofnumbers.length/2);
+			nilaiurutanmedianawal = parseFloat(arrayofnumbers[(arrayofnumbers.length/2)-1]);
+			nilaiurutanmedianakhir = parseFloat(arrayofnumbers[(arrayofnumbers.length/2)]);
+			nilaimedian = (nilaiurutanmedianawal+nilaiurutanmedianakhir)/2;
+			$('#info').text('Median = ' + nilaimedian);
+			$('#median-container .median-box:eq('+urutanmedianawal+')').css('border','solid 2px #0078D7');
+			$('#median-container .median-box:eq('+urutanmedianakhir+')').css('border','solid 2px #0078D7');
+
+		}
+		
+	}
+
+	$(document).ready(function()
+	{
+		$('#nilai').focus();
+	});
+
+	$('#tambahkan').on('click', function() {
+		if($('#nilai').val()!='')
+		{
+		$('#median-container').append('<div class="median-box"><div>'+$('#nilai').val()+'</div></div>');
+		}
+		sortnilai();
+		$('#nilai').focus();
+		$('#nilai').val('');
+
+	});
+
+	$(document).on('click', '.median-box', function()
+		{
+			this.remove();
+			sortnilai();
+				
+		});
+</script>
+<script type="text/javascript" src="scripts/framelessmenu.js"></script>
+</body>
+</html>

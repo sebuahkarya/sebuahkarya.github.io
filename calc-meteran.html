@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Meteran</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="css/index.css">
+	<link rel="stylesheet" type="text/css" href="fontawesome/css/all.css">
+	<script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+	<script type="text/javascript" src="jquery/jquery.js"></script>
+</head>
+<body>
+<!-- header -->
+<div class="header-dragable"></div>
+<div class="header">
+	<div class="header-title">Meteran</div>
+	<a class="header-back-button" href="index.html">Kembali</a>
+</div>
+<div class="container" style="margin-top: 64px;">
+	Nanometer<br>
+	<input type="text" class="input-large floatTextBox" name="" id="nilai-nanometer">
+	<p></p>
+	Mikrometer<br>
+	<input type="text" class="input-large floatTextBox" name="" id="nilai-mikrometer">
+	<p></p>
+	Milimeter<br>
+	<input type="text" class="input-large" name="" id="nilai-milimeter">
+	<p></p>
+	Centimeter<br>
+	<input type="text" class="input-large" name="" id="nilai-centimeter">
+	<p></p>
+	Desimeter<br>
+	<input type="text" class="input-large" name="" id="nilai-desimeter">
+	<p></p>
+	Meter<br>
+	<input type="text" class="input-large" name="" id="nilai-meter">
+	<p></p>
+	Dekameter<br>
+	<input type="text" class="input-large" name="" id="nilai-dekameter">
+	<p></p>
+	Hektometer<br>
+	<input type="text" class="input-large" name="" id="nilai-hektometer">
+	<p></p>
+	Kilometer<br>
+	<input type="text" class="input-large" name="" id="nilai-kilometer">
+	<p></p>
+	
+</div>
+<script type="text/javascript">
+	
+	var nanometer, mikrometer, milimeter, centimeter, desimeter, meter, dekameter, hektometer, kilometer;
+
+	$('#nilai-nanometer').on('input change', function()
+	{
+		nanometer = parseFloat( $('#nilai-nanometer').val() );
+		mikrometer = parseFloat( $('#nilai-nanometer').val() ) / 1000;
+		milimeter = parseFloat( $('#nilai-nanometer').val() ) / 1000000;
+		centimeter = parseFloat( $('#nilai-nanometer').val() ) / 10000000;
+		desimeter = parseFloat( $('#nilai-nanometer').val() ) / 100000000;
+		meter = parseFloat( $('#nilai-nanometer').val() ) / 1000000000;
+		dekameter = parseFloat( $('#nilai-nanometer').val() ) / 10000000000;
+		hektometer = parseFloat( $('#nilai-nanometer').val() ) / 100000000000;
+		kilometer = parseFloat( $('#nilai-nanometer').val() ) / 1000000000000;
+		$('#nilai-mikrometer').val(mikrometer);
+		$('#nilai-milimeter').val(milimeter);
+		$('#nilai-centimeter').val(centimeter);
+		$('#nilai-desimeter').val(desimeter);
+		$('#nilai-meter').val(meter);
+		$('#nilai-dekameter').val(dekameter);
+		$('#nilai-hektometer').val(hektometer);
+		$('#nilai-kilometer').val(kilometer);
+	}
+	);
+
+	$('#nilai-mikrometer').on('input change', function()
+	{
+		$('#nilai-nanometer').val($('#nilai-mikrometer').val()*1000);
+		$('#nilai-milimeter').val($('#nilai-mikrometer').val()/1000);
+		$('#nilai-centimeter').val($('#nilai-mikrometer').val()/10000);
+		$('#nilai-desimeter').val($('#nilai-mikrometer').val()/100000);
+		$('#nilai-meter').val($('#nilai-mikrometer').val()/1000000);
+		$('#nilai-dekameter').val($('#nilai-mikrometer').val()/10000000);
+		$('#nilai-hektometer').val($('#nilai-mikrometer').val()/100000000);
+		$('#nilai-kilometer').val($('#nilai-mikrometer').val()/1000000000);
+	}
+	);
+
+
+	$('#nilai-milimeter').on('input change', function()
+	{
+		$('#nilai-nanometer').val($('#nilai-milimeter').val()*1000000);
+		$('#nilai-mikrometer').val($('#nilai-milimeter').val()*1000);
+		$('#nilai-centimeter').val($('#nilai-milimeter').val()/10);
+		$('#nilai-desimeter').val($('#nilai-milimeter').val()/100);
+		$('#nilai-meter').val($('#nilai-milimeter').val()/1000);
+		$('#nilai-dekameter').val($('#nilai-milimeter').val()/10000);
+		$('#nilai-hektometer').val($('#nilai-milimeter').val()/100000);
+		$('#nilai-kilometer').val($('#nilai-milimeter').val()/1000000);
+	}
+	);
+
+	$('#nilai-centimeter').on('input change', function()
+	{
+		$('#nilai-nanometer').val($('#nilai-centimeter').val()*10000000);
+		$('#nilai-mikrometer').val($('#nilai-centimeter').val()*10000);
+		$('#nilai-milimeter').val($('#nilai-centimeter').val()*10);
+		$('#nilai-desimeter').val($('#nilai-centimeter').val()/10);
+		$('#nilai-meter').val($('#nilai-centimeter').val()/100);
+		$('#nilai-dekameter').val($('#nilai-centimeter').val()/1000);
+		$('#nilai-hektometer').val($('#nilai-centimeter').val()/10000);
+		$('#nilai-kilometer').val($('#nilai-centimeter').val()/100000);
+	}
+	);
+
+	$('#nilai-desimeter').on('input change', function()
+	{
+		$('#nilai-nanometer').val($('#nilai-desimeter').val()*100000000);
+		$('#nilai-mikrometer').val($('#nilai-desimeter').val()*100000);
+		$('#nilai-milimeter').val($('#nilai-desimeter').val()*100);
+		$('#nilai-centimeter').val($('#nilai-desimeter').val()*10);
+		$('#nilai-meter').val($('#nilai-desimeter').val()/10);
+		$('#nilai-dekameter').val($('#nilai-desimeter').val()/100);
+		$('#nilai-hektometer').val($('#nilai-desimeter').val()/1000);
+		$('#nilai-kilometer').val($('#nilai-desimeter').val()/10000);
+	}
+	);
+
+	$('#nilai-meter').on('input change', function()
+	{
+		$('#nilai-nanometer').val($('#nilai-meter').val()*1000000000);
+		$('#nilai-mikrometer').val($('#nilai-meter').val()*1000000);
+		$('#nilai-milimeter').val($('#nilai-meter').val()*1000);
+		$('#nilai-centimeter').val($('#nilai-meter').val()*100);
+		$('#nilai-desimeter').val($('#nilai-meter').val()*10);
+		$('#nilai-dekameter').val($('#nilai-meter').val()/10);
+		$('#nilai-hektometer').val($('#nilai-meter').val()/100);
+		$('#nilai-kilometer').val($('#nilai-meter').val()/1000);
+	}
+	);
+
+	$('#nilai-dekameter').on('input change', function()
+	{
+		$('#nilai-nanometer').val($('#nilai-dekameter').val()*10000000000);
+		$('#nilai-mikrometer').val($('#nilai-dekameter').val()*10000000);
+		$('#nilai-milimeter').val($('#nilai-dekameter').val()*10000);
+		$('#nilai-centimeter').val($('#nilai-dekameter').val()*1000);
+		$('#nilai-desimeter').val($('#nilai-dekameter').val()*100);
+		$('#nilai-meter').val($('#nilai-dekameter').val()*10);
+		$('#nilai-hektometer').val($('#nilai-dekameter').val()/10);
+		$('#nilai-kilometer').val($('#nilai-dekameter').val()/100);
+	}
+	);
+
+	$('#nilai-hektometer').on('input change', function()
+	{
+		$('#nilai-nanometer').val($('#nilai-hektometer').val()*100000000000);
+		$('#nilai-mikrometer').val($('#nilai-hektometer').val()*100000000);
+		$('#nilai-milimeter').val($('#nilai-hektometer').val()*100000);
+		$('#nilai-centimeter').val($('#nilai-hektometer').val()*10000);
+		$('#nilai-desimeter').val($('#nilai-hektometer').val()*1000);
+		$('#nilai-meter').val($('#nilai-hektometer').val()*100);
+		$('#nilai-dekameter').val($('#nilai-hektometer').val()*10);
+		$('#nilai-kilometer').val($('#nilai-hektometer').val()/10);
+	}
+	);
+
+	$('#nilai-kilometer').on('input change', function()
+	{
+		$('#nilai-nanometer').val($('#nilai-kilometer').val()*1000000000000);
+		$('#nilai-mikrometer').val($('#nilai-kilometer').val()*1000000000);
+		$('#nilai-milimeter').val($('#nilai-kilometer').val()*1000000);
+		$('#nilai-centimeter').val($('#nilai-kilometer').val()*100000);
+		$('#nilai-desimeter').val($('#nilai-kilometer').val()*10000);
+		$('#nilai-meter').val($('#nilai-kilometer').val()*1000);
+		$('#nilai-dekameter').val($('#nilai-kilometer').val()*100);
+		$('#nilai-hektometer').val($('#nilai-kilometer').val()*10);
+	}
+	);
+
+</script>
+<script type="text/javascript" src="scripts/allow-only-number.js"></script>
+<script type="text/javascript" src="scripts/framelessmenu.js"></script>
+</body>
+</html>

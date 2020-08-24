@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Kalkulator Sederhana</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" type="text/css" href="plugins/bootstrap/css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="plugins/fontawesome/css/all.css">
+	<style>
+		.class-display-none
+		{
+			display: none;
+		}
+	</style>
+</head>
+<body>
+<nav class="navbar navbar-expand-md bg-primary navbar-dark fixed-top">
+  <a class="navbar-brand" href="#">Kalkulator Sederhana</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="collapsibleNavbar">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="index.html">Menu Utama</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="settings.html">Pengaturan</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="about.html">Tentang Aplikasi</a>
+      </li>    
+    </ul>
+  </div>  
+</nav>
+
+<div class="container" style="margin-top: 5rem">
+	<span id="lbl-nilai-pertama">Nilai Pertama</span><br>
+	<input type="number" class="input-large form-control" name="" id="nilai-pertama">
+	<p></p>
+	Pilihan<br>
+	<select class="select form-control" id="pilihan">
+		<option value="tambah">Tambah(+)</option>
+		<option value="kurang">Kurang(-)</option>
+		<option value="kali">Kali(*)</option>
+		<option value="bagi">Bagi(/)</option>
+		<option value="pangkat">Pangkat</option>
+		<option value="modulus">Modulus</option>
+		<option value="akar">Akar</option>
+	</select>
+	<p></p>
+	<span id="lbl-nilai-kedua">Nilai Kedua</span><br>
+	<input type="number" class="input-large form-control" name="" id="nilai-kedua" class="txt-nilai-kedua">
+	<p></p>
+	Hasil<br>
+	<input type="number" class="input-large form-control" name="" readonly="true" id="nilai-hasil">
+	<p></p>
+	<button class="btn btn-danger btn-block" id="clear">Bersihkan</button>
+</div>
+</body>
+<script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+<script type="text/javascript" src="plugins/jquery/jquery.js"></script>
+<script type="text/javascript" src="plugins/popperjs/popper.js"></script>
+<script type="text/javascript" src="plugins/bootstrap/js/bootstrap.js"></script>
+<script type="text/javascript" src="plugins/mathjs/math.js"></script>
+<script type="text/javascript" src="scripts/framelessmenu.js"></script>
+<script type="text/javascript">
+	function clear()
+	{
+		$('#nilai-pertama').val('');
+		$('#nilai-kedua').val('');
+		$('#nilai-hasil').val('');
+	}
+
+	$(window).on('load ready', function()
+	{
+		hitung();
+	});
+
+	function hitung()
+	{
+		var nilaipertama = parseInt($('#nilai-pertama').val());
+		var nilaikedua = parseInt($('#nilai-kedua').val());	
+		if ($('#pilihan').val() == "tambah")
+		{
+			$('#nilai-pertama').removeClass('class-display-none');
+			$('#lbl-nilai-pertama').removeClass('class-display-none');
+			$('#lbl-nilai-kedua').text('Nilai Kedua');
+			var nilaihasil = nilaipertama+nilaikedua;
+		}
+		else if ($('#pilihan').val() == "kurang")
+		{
+			$('#nilai-pertama').removeClass('class-display-none');
+			$('#lbl-nilai-pertama').removeClass('class-display-none');
+			$('#lbl-nilai-kedua').text('Nilai Kedua');
+			var nilaihasil = nilaipertama-nilaikedua;
+		}
+		else if ($('#pilihan').val() == "kali")
+		{
+			$('#nilai-pertama').removeClass('class-display-none');
+			$('#lbl-nilai-pertama').removeClass('class-display-none');
+			$('#lbl-nilai-kedua').text('Nilai Kedua');
+			var nilaihasil = nilaipertama*nilaikedua;
+		}
+		else if ($('#pilihan').val() == "bagi")
+		{
+			$('#nilai-pertama').removeClass('class-display-none');
+			$('#lbl-nilai-pertama').removeClass('class-display-none');
+			$('#lbl-nilai-kedua').text('Nilai Kedua');
+			var nilaihasil = nilaipertama/nilaikedua;
+		}
+		else if ($('#pilihan').val() == "pangkat")
+		{
+			$('#nilai-pertama').removeClass('class-display-none');
+			$('#lbl-nilai-pertama').removeClass('class-display-none');
+			$('#lbl-nilai-kedua').text('Nilai Kedua');
+			var nilai_utama, nilai_pangkat, i, hasil_pangkat;
+			nilai_utama = nilaipertama;
+			nilai_pangkat = nilaikedua;
+			hasil_pangkat = nilai_utama;
+			for(i=1;i<nilai_pangkat;i++)
+			{
+				hasil_pangkat=hasil_pangkat*nilai_utama;
+			}
+			var nilaihasil = hasil_pangkat;
+		}
+		else if ($('#pilihan').val() == "modulus")
+		{
+			$('#nilai-pertama').removeClass('class-display-none');
+			$('#lbl-nilai-pertama').removeClass('class-display-none');
+			$('#lbl-nilai-kedua').text('Nilai Kedua');
+			var nilaihasil = math.mod(nilaipertama, nilaikedua);
+		}
+		else if ($('#pilihan').val() == "akar")
+		{
+			$('#nilai-pertama').addClass('class-display-none');
+			$('#lbl-nilai-pertama').addClass('class-display-none');
+			$('#lbl-nilai-kedua').text('Dari Nilai');
+			var nilaihasil = math.sqrt(nilaikedua);
+			// var nilaihasil = math.mod(nilaipertama, nilaikedua);
+		}
+		$('#nilai-hasil').val(nilaihasil);
+
+	}
+
+	$(document).on('input click change', '#nilai-pertama', '#nilai-kedua', function()
+	{
+		hitung();
+	}
+	);
+
+	$('#nilai-pertama').on('input click change', function()
+	{
+		hitung();
+	}
+	);
+
+	$('#nilai-kedua').on('input click change', function()
+	{
+		hitung();
+	}
+	);
+
+	$('#pilihan').on('change', function()
+	{
+		hitung();
+	}
+	);
+
+	$('#clear').click(function(event) {
+		clear();
+	});
+</script>
+</html>

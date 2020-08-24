@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Keranjang Belanja</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" type="text/css" href="plugins/bootstrap/css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="plugins/fontawesome/css/all.css">
+</head>
+<body>
+<nav class="navbar navbar-expand-md bg-primary navbar-dark fixed-top">
+	<a class="navbar-brand" href="index.html"><i class="fa fa-arrow-left"></i></a>
+  	<a class="navbar-brand" href="#">Keranjang Belanja</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="collapsibleNavbar">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="index.html">Menu Utama</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="settings.html">Pengaturan</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="about.html">Tentang Aplikasi</a>
+      </li>    
+    </ul>
+  </div>  
+</nav>
+
+<div class="modal fade" id="modal-editdialog" tabindex="-1" role="dialog" aria-labelledby="modal-editdialoglabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modal-editdialoglabel">Ubah Data Barang</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+		<input type="hidden" name="" id="edit-id">
+		Nama Barang<br>
+		<input type="text" class="form-control" name="" id="edit-nama-barang">
+		<p></p>
+		Harga Barang<br>
+		<input type="text" class="form-control floatTextBox" name="" id="edit-harga-barang">
+		<p></p>
+		Jumlah Barang<br>
+		<input type="text" class="form-control floatTextBox" name="" id="edit-jumlah-barang">
+		<p></p>
+		</div>
+      <div class="modal-footer">
+        <button type="button" id="edit-tambahkan" class="btn btn-primary" data-dismiss="modal">Simpan</button>
+        <button type="button" id="edit-batalkan" class="btn btn-danger" data-dismiss="modal">Batalkan</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container px-4" style="margin-top: 5rem">
+	<h5>Input Data Barang</h5>
+	Nama Barang<br>
+	<input type="text" class="form-control" name="" id="nama-barang">
+	<p></p>
+	Harga Barang<br>
+	<input type="text" class="form-control" name="" id="harga-barang">
+	<p></p>
+	Jumlah Barang<br>
+	<input type="text" class="form-control" name="" id="jumlah-barang">
+	<p></p>
+	<div class="form-check">
+	<input id="chk-bersihkan-input" class="form-check-input" type="checkbox" name="">
+	<label class="form-check-label" for="chk-bersihkan-input">Bersihkan input ketika menambah kedalam keranjang</label>
+	</div>
+	<p></p>
+	<div class="btn-group m-auto" role="group">
+	<button type="button" class="btn btn-primary" id="tambahkan">Tambah</button>
+	<button type="button" class="btn btn-danger" id="bersihkan">Bersihkan</button>
+	</div>
+</div>
+<p></p>
+<div class="container mt-5">
+	<h5>List Data Barang</h5>
+	<div class="table-responsive">
+	<div class="btn-group" role="group">
+			<button class="btn btn-outline-primary btn-sm text-nowrap" id="pilihsemua">Pilih Semua Baris</button>
+			<button class="btn btn-outline-primary btn-sm text-nowrap" id="inversipilihan">Inversi Pilihan</button>
+			<button class="btn btn-outline-danger btn-sm text-nowrap" id="hapuspilihan">Hapus Semua Pilihan</button>
+			<button class="btn btn-outline-danger btn-sm text-nowrap" type="button" id="bersihkanterpilih">Hapus Baris Terpilih</i></button>
+			<button class="btn btn-outline-danger btn-sm text-nowrap" id="clear">Hapus Semua Baris</i></button>
+	</div>
+	</div>
+	<div class="" id="containerdatatable">
+		
+	</div>
+	<div class="table-responsive">
+		<table id="keranjang-belanja" class="table table-bordered table-hover">
+			<tbody>
+				<thead class="bg-primary text-light">
+					<th class="align-text" id="pilih_header">Pilih</th>
+					<th class="align-text" id="namabarang_header">Nama</th>
+					<th class="text-right" id="hargabarang_header">Harga</th>
+					<th class="text-right" id="jumlahbarang_header">Jumlah</th>
+					<th class="text-right" id="totalhargabarang_header">Total</th>
+					<th class="text-center">Pilihan</th>
+				</thead>
+			</tbody>
+		</table>
+	</div>
+	<p></p>
+	<div class="container mt-5 text-right" id="hasil" style=" border-top: dashed 2px #999; font-weight: bold;">
+		
+	</div>
+</div>
+</body>
+<script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+<script type="text/javascript" src="plugins/jquery/jquery.js"></script>
+<script type="text/javascript" src="plugins/popperjs/popper.js"></script>
+<script type="text/javascript" src="plugins/bootstrap/js/bootstrap.js"></script>
+<script type="text/javascript" src="scripts/framelessmenu.js"></script>
+<script type="text/javascript" src="plugins/accountingjs/accounting.js"></script>
+<script type="text/javascript" src="plugins/sortelementsjs/sortelement.js"></script>
+<script type="text/javascript" src="scripts/allow-only-number.js"></script>
+<script type="text/javascript" src="scripts/formatuang.js"></script>
+<script type="text/javascript" src="scripts/framelessmenu.js"></script>
+<script type="text/javascript">
+	var array_pilihbaris = [];
+	var array_namabarang = [];
+	var array_jumlahbarang = [];
+	var array_hargabarang = [];
+	var array_totalhargabarang = [];
+	var jumlahrow;
+	$(document).ready(function()
+	{
+		var i;
+		array_pilihbaris = JSON.parse(localStorage['localstorage_calc_keranjang_belanja_array_pilihbaris']);
+		array_namabarang = JSON.parse(localStorage['localstorage_calc_keranjang_belanja_array_namabarang']);
+		array_hargabarang = JSON.parse(localStorage['localstorage_calc_keranjang_belanja_array_hargabarang']);
+		array_totalhargabarang = JSON.parse(localStorage['localstorage_calc_keranjang_belanja_array_totalhargabarang']);
+		array_jumlahbarang = JSON.parse(localStorage['localstorage_calc_keranjang_belanja_array_jumlahbarang']);
+		for(i=0; i<array_namabarang.length;i++)
+		{
+			if(array_pilihbaris[i] == '0')
+			{
+				$('#keranjang-belanja tbody').append('<tr><td><input type="checkbox" class="pilihbaris"></td><td class="align-text td-nama-barang" contenteditable="false">'+array_namabarang[i]+'</td><td class="text-right td-harga-barang" contenteditable="false">'+accounting.formatMoney(array_hargabarang[i], "Rp ", 0, ".", ",")+'</td><td class="text-right td-jumlah-barang" contenteditable="false">'+array_jumlahbarang[i]+'</td><td class="text-right total"></td><td class="text-center"><div class="btn-group"><button class="ubah btn btn-primary" data-toggle="modal" data-target="#modal-editdialog">Ubah</button><button class="hapus btn btn-danger">Hapus</button></div></td></tr>');
+			}
+			else if(array_pilihbaris[i] == '1')
+			{
+				$('#keranjang-belanja tbody').append('<tr><td><input type="checkbox" checked="false" class="pilihbaris"></td><td class="align-text td-nama-barang" contenteditable="false">'+array_namabarang[i]+'</td><td class="text-right td-harga-barang" contenteditable="false">'+accounting.formatMoney(array_hargabarang[i], "Rp ", 0, ".", ",")+'</td><td class="text-right td-jumlah-barang" contenteditable="false">'+array_jumlahbarang[i]+'</td><td class="text-right total"></td><td class="text-center"><div class="btn-group"><button class="ubah btn btn-primary" data-toggle="modal" data-target="#modal-editdialog">Ubah</button><button class="hapus btn btn-danger">Hapus</button></div></td></tr>');
+			}
+			else
+			{
+				$('#keranjang-belanja tbody').append('<tr><td><input type="checkbox" class="pilihbaris"></td><td class="align-text td-nama-barang" contenteditable="false">'+array_namabarang[i]+'</td><td class="text-right td-harga-barang" contenteditable="false">'+accounting.formatMoney(array_hargabarang[i], "Rp ", 0, ".", ",")+'</td><td class="text-right td-jumlah-barang" contenteditable="false">'+array_jumlahbarang[i]+'</td><td class="text-right total"></td><td class="text-center"><div class="btn-group"><button class="ubah btn btn-primary" data-toggle="modal" data-target="#modal-editdialog">Ubah</button><button class="hapus btn btn-danger">Hapus</button></div></td></tr>');
+			}
+		}
+		hitung();
+		bersihkaninput();	
+	}
+	);
+	
+	function hitung2()
+	{
+		jumlahbaris = $('#keranjang-belanja tbody tr').length;
+		var totalkeseluruhan=0, i;
+		if(jumlahbaris>1)
+		{
+		for(i=0; i<jumlahbaris; i++)
+		{
+			var hitunghargabarang = parseFloat($(document).find('#keranjang-belanja tbody tr:eq('+i+')').find('.td-harga-barang').text());
+			var hitungjumlahbarang = parseFloat($(document).find('#keranjang-belanja tbody tr:eq('+i+')').find('.td-jumlah-barang').text());
+			var hitungtotal = hitungjumlahbarang*hitunghargabarang;
+			$(document).find('#keranjang-belanja tbody tr:eq('+i+')').find('.total').text(hitungtotal);
+			totalkeseluruhan+=hitungtotal;
+
+		}
+		$('#hasil').text('Total Keseluruhan: '+totalkeseluruhan);
+		}
+		else if(jumlahbaris<2)
+		{
+			$('#hasil').text('Total Keseluruhan: '+0);
+		}
+	}
+
+	function hitung()
+	{
+
+		var totalkeseluruhan=0, i;
+		array_pilihbaris.length = 0;
+		array_namabarang.length = 0;
+		array_hargabarang.length = 0;
+		array_jumlahbarang.length = 0;
+		array_totalhargabarang.length = 0;
+		var jumlahbaris = $('#keranjang-belanja tbody tr').length;
+		if(jumlahbaris>0)
+		{
+			for(i = 0; i<jumlahbaris; i++)
+			{
+				if($('#keranjang-belanja tbody tr:eq('+i+')').find('.pilihbaris').is(':checked'))
+				{
+					array_pilihbaris[i] = 1;
+				}
+				else
+				{
+					array_pilihbaris[i] = 0;
+				}
+				array_namabarang[i] = $(document).find('#keranjang-belanja tbody tr:eq('+i+')').find('.td-nama-barang').text();
+				array_hargabarang[i] = parseFloat( accounting.unformat($(document).find('#keranjang-belanja tbody tr:eq('+i+')').find('.td-harga-barang').text(),","));
+				array_jumlahbarang[i] = parseFloat($(document).find('#keranjang-belanja tbody tr:eq('+i+')').find('.td-jumlah-barang').text());
+				array_totalhargabarang[i] = array_jumlahbarang[i] * accounting.unformat(array_hargabarang[i], ",");
+
+				$(document).find('#keranjang-belanja tbody tr:eq('+i+')').find('.total').text(accounting.formatMoney(array_totalhargabarang[i], "Rp ", 0, ".", ","));
+				totalkeseluruhan+=parseFloat(array_totalhargabarang[i]);
+			}
+			if(Number.isNaN(totalkeseluruhan) || totalkeseluruhan == null || totalkeseluruhan == undefined)
+			{
+				$('#hasil').text('Total Keseluruhan: '+accounting.formatMoney(0, "Rp ", 0, ".", ","));
+			}
+			else
+			{
+				$('#hasil').text('Total Keseluruhan: '+accounting.formatMoney(totalkeseluruhan, "Rp ", 0, ".", ","));	
+			}
+		}
+		else if(jumlahbaris<1)
+		{
+			$('#hasil').text('Total Keseluruhan: '+0);
+		}
+		localStorage['localstorage_calc_keranjang_belanja_array_pilihbaris'] = JSON.stringify(array_pilihbaris);
+		localStorage['localstorage_calc_keranjang_belanja_array_namabarang'] = JSON.stringify(array_namabarang);
+		localStorage['localstorage_calc_keranjang_belanja_array_hargabarang'] = JSON.stringify(array_hargabarang);
+		localStorage['localstorage_calc_keranjang_belanja_array_jumlahbarang'] = JSON.stringify(array_jumlahbarang);
+		localStorage['localstorage_calc_keranjang_belanja_array_totalhargabarang'] = JSON.stringify(array_totalhargabarang);
+
+		$('#containerdatatable').html('Jumlah baris: '+(jumlahbaris));
+	}
+
+	function bersihkaninput()
+	{
+		$('#nama-barang').val('');
+		$('#harga-barang').val('');
+		$('#jumlah-barang').val('');
+	}
+
+	$('#tambahkan').on('click', function()
+	{
+		var namabarang = $('#nama-barang').val();
+		if( $('#harga-barang').val()==null || $('#harga-barang').val()=="" )
+		{
+			var hargabarang = 0;	
+		}
+		else
+		{
+			var hargabarang = parseFloat($('#harga-barang').val());	
+		}
+
+		if( $('#jumlah-barang').val()==null || $('#jumlah-barang').val()=="" )
+		{
+			var jumlahbarang = 0;	
+		}
+		else
+		{
+			var jumlahbarang = parseFloat($('#jumlah-barang').val());	
+		}
+		
+		
+		$('#keranjang-belanja tbody').append('<tr><td><input type="checkbox" class="pilihbaris"></td><td class="align-text td-nama-barang" contenteditable="false">'+namabarang+'</td><td class="text-right td-harga-barang floatTextBox" contenteditable="false">'+accounting.formatMoney(hargabarang, "Rp", 0, ".", ",")+'</td><td class="text-right td-jumlah-barang floatTextBox" contenteditable="false">'+jumlahbarang+'</td><td class="text-right total"></td><td class="text-center"><div class="btn-group"><button class="ubah btn btn-primary" data-toggle="modal" data-target="#modal-editdialog">Ubah</button><button class="hapus btn btn-danger">Hapus</button></div></td></tr>');
+		hitung();
+		if($('#chk-bersihkan-input').is(':checked'))
+		{
+			bersihkaninput();
+		}
+		$('#nama-barang').select();
+	}
+	);
+
+
+	$(document).on('click', '.hapus', function()
+	{
+		this.closest('tr').remove();
+		hitung();
+	}
+	);
+
+	$(document).on('click', '.ubah', function()
+	{
+		$('#edit-id').val( $(this).closest('tr').index() );		
+		$('#edit-nama-barang').val( $(this).closest('tr').find('.td-nama-barang').text() );
+		var tdhargabarang = $(this).closest('tr').find('.td-harga-barang').text();
+		tdhargabarang = accounting.unformat(tdhargabarang, ",");
+		$('#edit-harga-barang').val( accounting.unformat(tdhargabarang) );		
+		$('#edit-jumlah-barang').val( $(this).closest('tr').find('.td-jumlah-barang').text() );		
+		hitung();
+	}
+	);
+
+
+	$('#edit-tambahkan').on('click', function()
+	{
+
+		editedhargabarang = parseFloat($('#edit-harga-barang').val());
+		var i = $('#edit-id').val();
+		$('#keranjang-belanja tbody tr:eq('+i+')').find('.td-nama-barang').text($('#edit-nama-barang').val());
+		var hargabarang = $('#edit-harga-barang').val();
+		var jumlahbarang = $('#edit-jumlah-barang').val();
+		if( hargabarang==null || hargabarang=="" )
+		{
+			var hargabarang = accounting.formatMoney(0, "Rp ", 0, ".", ",");	
+		}
+		else
+		{
+			$('#keranjang-belanja tbody tr:eq('+i+')').find('.td-harga-barang').text( accounting.formatMoney(editedhargabarang, "Rp ", 0, ".", ",") );
+		}
+
+		if( jumlahbarang==null || jumlahbarang=="" )
+		{
+			$('#keranjang-belanja tbody tr:eq('+i+')').find('.td-jumlah-barang').text('0');
+		}
+		else
+		{
+			$('#keranjang-belanja tbody tr:eq('+i+')').find('.td-jumlah-barang').text( $('#edit-jumlah-barang').val() );
+		}
+		hitung();
+	}
+	);
+
+
+	$(document).on('click input change', '.td-harga-barang', function()
+	{
+		hitung();
+	}
+	);
+
+	$(document).on('click input change', '.td-nama-barang', function()
+	{
+		hitung();
+	}
+	);
+
+	$(document).on('click input change', '.td-jumlah-barang', function()
+	{
+		hitung();
+	}
+	);
+
+
+	$('#clear').on('click', function()
+	{
+		jumlahbaris = $('#keranjang-belanja tbody tr').length;
+		var i;
+		for(i=(jumlahbaris); i>=0; i--)
+		{
+			$('#keranjang-belanja tbody tr:eq('+i+')').remove();
+		}
+		hitung();
+	}
+	);
+
+	$('#bersihkan').on('click', function()
+	{
+		bersihkaninput();
+		hitung();
+	}
+	);
+
+	$('#bersihkanterpilih').on('click', function()
+	{
+		jumlahbaris = $('#keranjang-belanja tbody tr').length;
+		var i;
+		for(i=(jumlahbaris); i>=1; i--)
+		{
+			if($('#keranjang-belanja tbody tr:eq('+i+')').find('.pilihbaris').is(':checked'))
+			{
+				$('#keranjang-belanja tbody tr:eq('+i+')').remove();	
+			}
+			
+		}
+		hitung();
+	}
+	);
+
+	$('#keranjang-belanja').on('change click', ' .pilihbaris', function()
+	{
+		hitung();
+	}
+	);
+
+	$('#pilihsemua').on('click', function()
+	{
+		$('#keranjang-belanja tbody tr').find('.pilihbaris').prop('checked', true);
+		hitung();
+	}
+	);
+
+	$('#hapuspilihan').on('click', function()
+	{
+		$('#keranjang-belanja tbody tr').find('.pilihbaris').prop('checked', false);
+		hitung();
+	}
+	);
+
+	$('#inversipilihan').on('click', function()
+	{
+		jumlahbaris = $('#keranjang-belanja tbody tr').length;
+		var i;
+		for(i=jumlahbaris; i>=0; i--)
+		{
+			if($('#keranjang-belanja tbody tr:eq('+i+')').find('.pilihbaris').is(':checked'))
+			{
+				$('#keranjang-belanja tbody tr:eq('+i+')').find('.pilihbaris').prop('checked', false);	
+			}
+			else
+			{
+				$('#keranjang-belanja tbody tr:eq('+i+')').find('.pilihbaris').prop('checked', true);	
+			}
+			
+		}
+		hitung();
+	}
+	);
+
+//sort table
+	var table = $('#keranjang-belanja');
+    
+    $('#namabarang_header')
+        .wrapInner('<span title="sort this column"/>')
+        .each(function(){
+            
+            var th = $(this),
+                thIndex = th.index(),
+                inverse = false;
+            
+            th.click(function(){
+                
+                table.find('td').filter(function(){
+                    
+                    return $(this).index() === thIndex;
+                    
+                }).sortElements(function(a, b){
+                    
+                    return $.text([a]) > $.text([b]) ?
+                        inverse ? -1 : 1
+                        : inverse ? 1 : -1;
+                    
+                }, function(){
+                    
+                    // parentNode is the element we want to move
+                    return this.parentNode; 
+                    
+                });
+                
+                inverse = !inverse;
+                    
+            });
+                
+        });
+
+</script>
+</html>

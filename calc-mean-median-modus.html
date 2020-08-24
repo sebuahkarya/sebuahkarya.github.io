@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Mean, Median, & Modus</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="css/index.css">
+	<link rel="stylesheet" type="text/css" href="fontawesome/css/all.css">
+	<script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+	<script type="text/javascript" src="jquery/jquery.js"></script>
+	<script type="text/javascript" src="mathjs/math.js"></script>
+	<style>
+		.nilai-box
+		{
+			padding: 8px;
+			border: solid 1px #999;
+			border-radius: 4px;
+			margin: 8px;
+			user-select: none;
+		}
+
+		.container-hasil-alt
+		{
+			overflow: auto;
+			max-height: 480px;
+			border: solid 1px #999;
+			box-shadow: inset 0px 0px 8px 0px #aaa;
+			padding: 4px;
+			background: #f1f1f1;
+			border-radius: 4px;
+		}
+	</style>
+</head>
+<body>
+	<div class="header-dragable"></div>
+<div class="header">
+	<div class="header-title">Mean, Median, & Modus</div>
+	<a class="header-back-button" href="index.html">Kembali</a>
+</div>
+<div class="container" style="margin-top: 64px;">
+	<p><h1><u>Data Tunggal</u></h1></p>
+	Masukkan Nilai<br>
+	<input type="number" class="input-large" name="" id="nilai">
+	<p></p>
+	<button type="button" id="tambahkan" class="button1-full">Tambah</button>
+	<p></p>
+	<!-- <button id="datacontoh">Data Contoh</button> -->
+</div>
+<div class="container-flex" id="nilai-container" style="border:solid 0px #eee; border-radius: 4px;">
+	
+</div>
+<div class="container" id="info">
+	<div id="info-mean">
+		
+	</div>
+	<p></p>
+	<div id="info-median" style="color: #0078D7;">
+		
+	</div>
+	<p></p>
+	<div id="info-modus" style="color: #3CB371;">
+		
+	</div>
+	<p></p>
+	<div id="info-kuartil" class="container-hasil-alt">
+		
+	</div>
+	<p></p>
+	<div id="info-desil" class="container-hasil-alt">
+		
+	</div>
+	<p></p>
+	<div id="info-persentil" class="container-hasil-alt">
+		
+	</div>
+
+</div>
+<div class="container">
+	<p><h1><u>Mean Data Kelompok</u></h1></p>
+	Batas Bawah<br>
+	<input type="number" class="input-large" name="" id="nilai-mean-batas-bawah">
+	<p></p>
+	Batas Atas<br>
+	<input type="number" class="input-large" name="" id="nilai-mean-batas-atas">
+	<p></p>
+	Frekuensi<br>
+	<input type="number" class="input-large" name="" id="nilai-mean-frekuensi">
+	<p></p>
+	<button class="button1-full" id="btn-add-row-mean-kelompok">+Row</button>
+	<p></p>
+	<table id="tabel-mean-kelompok">
+		<tbody>
+			<tr>
+				<th class="text-align-right">Nilai Terendah</th>
+				<th class="text-align-right">Nilai Tertinggi</th>
+				<th class="text-align-right">Frekuensi</th>
+				<th class="text-align-center">Pilihan</th>
+			</tr>
+		</tbody>
+	</table>
+	<p></p>
+	<div id="info-mean-kelompok" class="container-hasil-alt">
+	</div>
+</div>
+<div class="container">
+	<p><h1><u>Median Data Kelompok</u></h1></p>
+	Batas Bawah<br>
+	<input type="number" class="input-large" name="" id="nilai-median-batas-bawah">
+	<p></p>
+	Batas Atas<br>
+	<input type="number" class="input-large" name="" id="nilai-median-batas-atas">
+	<p></p>
+	Frekuensi<br>
+	<input type="number" class="input-large" name="" id="nilai-median-frekuensi">
+	<p></p>
+	<button class="button1-full" id="btn-add-row-median-kelompok">+Row</button>
+	<p></p>
+	<table id="tabel-median-kelompok">
+		<tbody>
+			<tr>
+				<th class="text-align-right">No.</th>
+				<th class="text-align-right">Nilai Terendah</th>
+				<th class="text-align-right">Nilai Tertinggi</th>
+				<th class="text-align-right">Frekuensi</th>
+				<th class="text-align-right">Frekuensi Kumulatif</th>
+				<th class="text-align-center">Pilihan</th>
+			</tr>
+		</tbody>
+	</table>
+	<p></p>
+	<button class="button1-full" id="btn-recalculate-median-kelompok">Kalkulasi Ulang</button>
+	<p></p>
+	<div id="info-median-kelompok" class="container-hasil-alt">
+	</div>
+</div>
+<script type="text/javascript">
+
+	function sortnilai()
+	{
+		var arrayofnumbers = [];
+		var i =0;
+		var jumlahmedian = $('#nilai-container .nilai-box').length;
+		for(i=0;i<jumlahmedian;i++)
+		{
+			arrayofnumbers[i] = $('#nilai-container .nilai-box:eq('+i+')').text();
+		}
+		arrayofnumbers.sort(function(a, b){return a-b});
+		//alert(arrayofnumbers);
+		$('#nilai-container').text('');
+		for(i=0;i<arrayofnumbers.length;i++)
+		{
+			$('#nilai-container').append('<div class="nilai-box"><div>'+arrayofnumbers[i]+'</div></div>');
+		}
+		var urutanmedian = 0;
+		var nilaimedian = 0;
+		if(arrayofnumbers.length%2==1)
+		{
+			urutanmedian = (arrayofnumbers.length/2)-0.5;
+			nilaimedian = arrayofnumbers[(arrayofnumbers.length/2)-0.5];
+			$('#info-median').text('Median: ' + nilaimedian);
+			$('#nilai-container .nilai-box:eq('+urutanmedian+')').css('border-top','solid 2px #0078D7');
+		}
+		else if(arrayofnumbers.length%2==0)
+		{
+			urutanmedianawal = (arrayofnumbers.length/2)-1;
+			urutanmedianakhir = (arrayofnumbers.length/2);
+			nilaiurutanmedianawal = parseFloat(arrayofnumbers[(arrayofnumbers.length/2)-1]);
+			nilaiurutanmedianakhir = parseFloat(arrayofnumbers[(arrayofnumbers.length/2)]);
+			nilaimedian = (nilaiurutanmedianawal+nilaiurutanmedianakhir)/2;
+			$('#info-median').text('Median: ' + nilaimedian);
+			$('#nilai-container .nilai-box:eq('+urutanmedianawal+')').css('border-top','solid 2px #0078D7');
+			$('#nilai-container .nilai-box:eq('+urutanmedianakhir+')').css('border-top','solid 2px #0078D7');
+
+		}
+		
+	}
+
+	function hitung()
+	{
+		var jumlah_nilai = parseInt($('#nilai-container .nilai-box').length);
+		
+		var hasil = 0;
+		var i =0;
+		for(i=0;i<jumlah_nilai;i++)
+		{
+			var mean_box_val = parseFloat($('#nilai-container .nilai-box:eq('+i+')').text())
+			hasil+= mean_box_val;
+		}
+		var min = $('.nilai-box:eq('+0+')').text();
+		var max = $('.nilai-box:eq('+(jumlah_nilai-1)+')').text();
+		if(jumlah_nilai<=0)
+		{
+		$('#info-mean').html('Nilai Terkecil: '+min+'<br>'+'Nilai Terbesar: '+max+'<br>'+'Total Nilai: '+'0'+'<br>'+'Mean/Rata-Rata: '+'0');
+		}
+		else if(jumlah_nilai>=1)
+		{
+			$('#info-mean').html('Nilai Terkecil: '+min+'<br>'+'Nilai Terbesar: '+max+'<br>'+'Jumlah Nilai: '+jumlah_nilai+'<br>'+'Total Nilai: '+hasil+'<br>'+'Mean/Rata-Rata: '+(hasil/jumlah_nilai));
+		}
+	}
+
+	function mode()
+	{
+		var jumlahnilai = $('#nilai-container .nilai-box').length;
+
+
+		if(jumlahnilai>0)
+		{
+
+
+
+		var arrayofnumbers = [];
+		var i =0;
+		
+		for(i=0;i<jumlahnilai;i++)
+		{
+			arrayofnumbers[i] = $('#nilai-container .nilai-box:eq('+i+')').text();
+		}
+		modus = math.mode(arrayofnumbers);
+		$('#info-modus').html('Modus: '+modus);
+		for(i=0;i<modus.length;i++)
+		{
+			currentmode = modus[i];
+			for(var j = 0; j<jumlahnilai;j++)
+			{
+				if($('#nilai-container .nilai-box:eq('+j+')').text()==currentmode)
+				{
+					$('#nilai-container .nilai-box:eq('+j+')').css('border-bottom','solid 2px mediumseagreen');	
+				}
+			}
+		}
+
+
+		}
+		else
+		{
+			$('#info-mean').html('');
+			$('#info-median').html('');
+			$('#info-modus').html('');
+			$('#info-kuartil').html('');
+			$('#info-desil').html('');
+			$('#info-persentil').html('');
+		}
+	}
+
+	function kuartil()
+	{
+		var i;
+		
+		// alert(jumlahdata);
+		
+		var jumlahdata = $('.nilai-box').length;
+		var n=jumlahdata;
+
+		if(n>0)
+		{
+
+
+		var stringpercentile='';
+		arrayofnumbers=[$('.nilai-box:eq('+0+')').text()];
+			// alert(jumlahdata);
+		for(i=1;i<=jumlahdata;i++)
+		{
+			arrayofnumbers[i] = $('.nilai-box:eq('+(i-1)+')').text();
+		}
+		arrayofnumbers[arrayofnumbers.length] = $('.nilai-box:eq('+(jumlahdata-1)+')').text();
+		arrayofnumbers[arrayofnumbers.length] = $('.nilai-box:eq('+(jumlahdata-1)+')').text();
+		// alert(arrayofnumbers);
+		// alert(arrayofnumbers.length);
+
+		for(i=1;i<=4;i++)
+		{
+			var rumus = parseFloat( (i*(jumlahdata+1))/4);
+			var xbawah = parseFloat( arrayofnumbers[math.floor(rumus)] );
+			var xatas = parseFloat( arrayofnumbers[math.floor(rumus)+1] );
+			var sisarumus = parseFloat( rumus-math.floor(rumus) );
+			var hasil = parseFloat( xbawah+(sisarumus*(xatas-xbawah)) );
+			stringpercentile+='Kuartil Ke-'+i+'= '+hasil+'<br>';
+
+			// var rumuscontoh = parseFloat( (1*(jumlahdata+1))/4 );
+			// var xbawahcontoh = parseFloat( arrayofnumbers[math.floor(rumuscontoh)] );
+			// var xatascontoh = parseFloat( arrayofnumbers[math.floor(rumuscontoh)+1] );
+			// var sisarumuscontoh = parseFloat( rumuscontoh-math.floor(rumuscontoh) );
+			// var hasilcontoh = parseFloat( xbawahcontoh+(sisarumuscontoh*(xatascontoh-xbawahcontoh)) );
+			
+		}
+
+			// alert(rumus);
+			// alert(sisarumus);
+			// alert(xbawah);
+			// alert(xatas);
+			// alert(hasil);
+
+		$('#info-kuartil').html(stringpercentile);
+
+
+		}
+		else
+		{
+			$('#info-modus').html('');
+			$('#info-kuartil').html('');
+			$('#info-desil').html('');
+			$('#info-persentil').html('');
+		}
+
+	}
+
+	function desil()
+	{
+		var i;
+		
+		// alert(jumlahdata);
+		var jumlahdata = $('.nilai-box').length;
+		var n=jumlahdata;
+
+
+		if(n>0)
+		{
+
+		var stringpercentile='';
+		arrayofnumbers=[$('.nilai-box:eq('+0+')').text()];
+			// alert(jumlahdata);
+		for(i=1;i<=jumlahdata;i++)
+		{
+			arrayofnumbers[i] = $('.nilai-box:eq('+(i-1)+')').text();
+		}
+		arrayofnumbers[arrayofnumbers.length] = $('.nilai-box:eq('+(jumlahdata-1)+')').text();
+		arrayofnumbers[arrayofnumbers.length] = $('.nilai-box:eq('+(jumlahdata-1)+')').text();
+		// alert(arrayofnumbers);
+		// alert(arrayofnumbers.length);
+
+		for(i=1;i<=10;i++)
+		{
+			var rumus = parseFloat( (i*(jumlahdata+1))/10);
+			var xbawah = parseFloat( arrayofnumbers[math.floor(rumus)] );
+			var xatas = parseFloat( arrayofnumbers[math.floor(rumus)+1] );
+			var sisarumus = parseFloat( rumus-math.floor(rumus) );
+			var hasil = parseFloat( xbawah+(sisarumus*(xatas-xbawah)) );
+			stringpercentile+='Desil Ke-'+i+'= '+hasil+'<br>';
+
+			// var rumuscontoh = parseFloat( (1*(jumlahdata+1))/4 );
+			// var xbawahcontoh = parseFloat( arrayofnumbers[math.floor(rumuscontoh)] );
+			// var xatascontoh = parseFloat( arrayofnumbers[math.floor(rumuscontoh)+1] );
+			// var sisarumuscontoh = parseFloat( rumuscontoh-math.floor(rumuscontoh) );
+			// var hasilcontoh = parseFloat( xbawahcontoh+(sisarumuscontoh*(xatascontoh-xbawahcontoh)) );
+			
+		}
+
+			// alert(rumus);
+			// alert(sisarumus);
+			// alert(xbawah);
+			// alert(xatas);
+			// alert(hasil);
+
+		$('#info-desil').html(stringpercentile);
+
+
+		}
+		else
+		{
+			$('#info-modus').html('');
+			$('#info-kuartil').html('');
+			$('#info-desil').html('');
+			$('#info-persentil').html('');
+		}
+
+
+	}
+
+	function persentil()
+	{
+		var i;
+		
+		// alert(jumlahdata);
+		var jumlahdata = $('.nilai-box').length;
+		var n=jumlahdata;
+
+
+		if(n>0)
+		{
+
+		var stringpercentile='';
+		arrayofnumbers=[$('.nilai-box:eq('+0+')').text()];
+			
+			// alert(jumlahdata);
+		for(i=1;i<=jumlahdata;i++)
+		{
+			arrayofnumbers[i] = $('.nilai-box:eq('+(i-1)+')').text();
+		}
+		arrayofnumbers[arrayofnumbers.length] = $('.nilai-box:eq('+(jumlahdata-1)+')').text();
+		arrayofnumbers[arrayofnumbers.length] = $('.nilai-box:eq('+(jumlahdata-1)+')').text();
+		// alert(arrayofnumbers);
+		// alert(arrayofnumbers.length);
+
+		for(i=1;i<=100;i++)
+		{
+			var rumus = parseFloat( (i*(jumlahdata+1))/100);
+			var xbawah = parseFloat( arrayofnumbers[math.floor(rumus)] );
+			var xatas = parseFloat( arrayofnumbers[math.floor(rumus)+1] );
+			var sisarumus = parseFloat( rumus-math.floor(rumus) );
+			var hasil = parseFloat( xbawah+(sisarumus*(xatas-xbawah)) );
+			stringpercentile+='Persentil Ke-'+i+'= '+hasil+'<br>';
+
+			// var rumuscontoh = parseFloat( (1*(jumlahdata+1))/4 );
+			// var xbawahcontoh = parseFloat( arrayofnumbers[math.floor(rumuscontoh)] );
+			// var xatascontoh = parseFloat( arrayofnumbers[math.floor(rumuscontoh)+1] );
+			// var sisarumuscontoh = parseFloat( rumuscontoh-math.floor(rumuscontoh) );
+			// var hasilcontoh = parseFloat( xbawahcontoh+(sisarumuscontoh*(xatascontoh-xbawahcontoh)) );
+			
+		}
+
+			// alert(rumus);
+			// alert(sisarumus);
+			// alert(xbawah);
+			// alert(xatas);
+			// alert(hasil);
+
+		$('#info-persentil').html(stringpercentile);
+
+
+		}
+		else
+		{
+			$('#info-modus').html('');
+			$('#info-kuartil').html('');
+			$('#info-desil').html('');
+			$('#info-persentil').html('');
+		}
+
+
+
+	}
+
+	$(document).ready(function()
+	{
+		$('#nilai').focus();
+	});
+
+	$('#tambahkan').on('click', function() {
+		if($('#nilai').val()!='')
+		{
+		$('#nilai-container').append('<div class="nilai-box"><div>'+$('#nilai').val()+'</div></div>');
+		}
+		sortnilai();
+		hitung();
+		mode();
+		kuartil();
+		desil();
+		persentil();
+		$('#nilai').focus();
+		$('#nilai').val('');
+	});
+
+	$(document).on('click', '.nilai-box', function()
+		{
+			this.remove();
+			sortnilai();
+			hitung();
+			mode();
+			kuartil();
+			desil();
+			persentil();
+		});
+
+$('#datacontoh').on('click', function()
+		{
+			$('#nilai-container').html('');
+			$('#nilai-container').append('<div class="nilai-box">4</div>');
+			$('#nilai-container').append('<div class="nilai-box">5</div>');
+			$('#nilai-container').append('<div class="nilai-box">5</div>');
+			$('#nilai-container').append('<div class="nilai-box">6</div>');
+			$('#nilai-container').append('<div class="nilai-box">7</div>');
+			$('#nilai-container').append('<div class="nilai-box">7</div>');
+			$('#nilai-container').append('<div class="nilai-box">8</div>');
+			$('#nilai-container').append('<div class="nilai-box">9</div>');
+			$('#nilai-container').append('<div class="nilai-box">10</div>');
+			$('#nilai-container').append('<div class="nilai-box">11</div>');
+			sortnilai();
+			hitung();
+			mode();
+			kuartil();
+			desil();
+			persentil();
+		});	
+
+
+		$('#btn-add-row-mean-kelompok').on('click', function()
+		{
+			var mean_batas_bawah = $('#nilai-mean-batas-bawah').val();
+			var mean_batas_atas = $('#nilai-mean-batas-atas').val();
+			var mean_frekuensi = $('#nilai-mean-frekuensi').val();
+			$('#tabel-mean-kelompok tbody').append('<tr><td contenteditable="true" class="td_mean_kelompok_batas_bawah text-align-right">'+mean_batas_bawah+'</td><td contenteditable="true" class="td_mean_kelompok_batas_atas text-align-right">'+mean_batas_atas+'</td><td contenteditable="true" class="td_mean_kelompok_frekuensi text-align-right">'+mean_frekuensi+'</td><td class="text-align-center"><button class="button2 btn-hapus-mean-kelompok">Hapus</button></td></tr>');
+			hitung_mean_kelompok();
+		});
+
+		$(document).on('click', '.btn-hapus-mean-kelompok',function()
+		{
+			this.closest('tr').remove();
+			hitung_mean_kelompok();
+		});
+
+		$(document).on('click input change', '.td_mean_kelompok_batas_bawah',  function()
+		{
+			hitung_mean_kelompok();
+		});
+
+		$(document).on('click input change', '.td_mean_kelompok_batas_atas',  function()
+		{
+			hitung_mean_kelompok();
+		});
+
+		$(document).on('click input change', '.td_mean_kelompok_frekuensi',  function()
+		{
+			hitung_mean_kelompok();
+		});
+
+		function hitung_mean_kelompok()
+		{
+			var tabel_mean_kelompok_length = $('#tabel-mean-kelompok tbody tr').length;
+			// alert(tabel_mean_kelompok_length);
+			var array_mean_kelompok_batas_atas = [];
+			var array_mean_kelompok_batas_bawah = [];
+			var array_mean_kelompok_batas_tengah = [];
+			var array_mean_kelompok_frekuensi = [];
+			var mean_kelompok_batas_tengah_frekuensi_total = 0;
+			var mean_kelompok_frekuensi_total = 0;
+			var i;
+			for(i=1;i<tabel_mean_kelompok_length;i++)
+			{
+				array_mean_kelompok_batas_bawah[(i-1)] = parseFloat($('#tabel-mean-kelompok tbody').find('.td_mean_kelompok_batas_bawah:eq('+(i-1)+')').text());
+				array_mean_kelompok_batas_atas[(i-1)] = parseFloat($('#tabel-mean-kelompok tbody').find('.td_mean_kelompok_batas_atas:eq('+(i-1)+')').text());
+				array_mean_kelompok_batas_tengah[(i-1)] =  (parseFloat(array_mean_kelompok_batas_bawah[(i-1)])+parseFloat(array_mean_kelompok_batas_atas[(i-1)]))/2;
+				array_mean_kelompok_frekuensi[(i-1)] = parseFloat($('#tabel-mean-kelompok tbody').find('.td_mean_kelompok_frekuensi:eq('+(i-1)+')').text());
+				mean_kelompok_batas_tengah_frekuensi_total+= parseFloat( array_mean_kelompok_batas_tengah[(i-1)] )*parseFloat( array_mean_kelompok_frekuensi[(i-1)] );
+				
+				mean_kelompok_frekuensi_total+= parseFloat( array_mean_kelompok_frekuensi[(i-1)] );
+			}
+		
+
+					var hasil = parseFloat(mean_kelompok_batas_tengah_frekuensi_total)/parseFloat(mean_kelompok_frekuensi_total);
+			$('#info-mean-kelompok').html('Nilai Rata-Rata: '+hasil);
+		}
+
+
+		$('#btn-add-row-median-kelompok').on('click', function()
+		{
+			var median_batas_bawah = $('#nilai-median-batas-bawah').val();
+			var median_batas_atas = $('#nilai-median-batas-atas').val();
+			var median_frekuensi = $('#nilai-median-frekuensi').val();
+			$('#tabel-median-kelompok tbody').append('<tr><td contenteditable="false" class="td_median_kelompok_nomor text-align-right"></td><td contenteditable="true" class="td_median_kelompok_batas_bawah text-align-right">'+median_batas_bawah+'</td><td contenteditable="true" class="td_median_kelompok_batas_atas text-align-right">'+median_batas_atas+'</td><td contenteditable="true" class="td_median_kelompok_frekuensi text-align-right">'+median_frekuensi+'</td><td contenteditable="false" class="td_median_kelompok_frekuensi_kumulatif text-align-right"></td><td class="text-align-center"><button class="button2 btn-hapus-median-kelompok">Hapus</button></td></tr>');
+			var panjang_tabel_median = $('#tabel-median-kelompok tbody tr').length;
+			var nomor=0;
+			var i;
+			for(i=1;i<panjang_tabel_median;i++)
+			{
+				nomor+=1;
+				$('#tabel-median-kelompok tbody').find('.td_median_kelompok_nomor:eq('+(i-1)+')').text(nomor);
+			}
+			hitung_median_kelompok();
+		});
+
+		$(document).on('click', '.btn-hapus-median-kelompok',function()
+		{
+			this.closest('tr').remove();
+			var panjang_tabel_median = $('#tabel-median-kelompok tbody tr').length;
+			var nomor=0;
+			var i;
+			for(i=1;i<panjang_tabel_median;i++)
+			{
+				nomor+=1;
+				$('#tabel-median-kelompok tbody').find('.td_median_kelompok_nomor:eq('+(i-1)+')').text(nomor);
+			}
+			hitung_median_kelompok();
+		});
+
+		$(document).on('input change', '.td_median_kelompok_batas_bawah',  function()
+		{
+			hitung_median_kelompok();
+		});
+
+		$(document).on('input change', '.td_median_kelompok_batas_atas',  function()
+		{
+			// hitung_median_kelompok();
+		});
+
+		$(document).on('input change', '.td_median_kelompok_frekuensi',  function()
+		{
+			hitung_median_kelompok();
+		});
+
+		$('#btn-recalculate-median-kelompok').on('click', function()
+		{
+			hitung_median_kelompok();
+		});
+
+
+		function hitung_median_kelompok()
+		{
+			var tabel_median_kelompok_length = $('#tabel-median-kelompok tbody tr').length;
+			// alert(tabel_mean_kelompok_length);
+			var array_median_kelompok_batas_atas = [];
+			var array_median_kelompok_batas_bawah = [];
+			var array_median_kelompok_batas_tengah = [];
+			var array_median_kelompok_frekuensi = [];
+			var median_kelompok_batas_tengah_frekuensi_total = 0;
+			var median_kelompok_frekuensi_total = 0;
+			var temp_median_kelompok_frekuensi_total = 0;
+			var setengah_median_kelompok_frekuensi_total = 0;
+			var stop_target_median = 0;
+			var index_target_median = 0;
+			var tepi_batas_bawah_median_kelompok = 0;
+			var frekuensi_sebelumnya = 0;
+			var frekuensi_sekarang = 0;
+			// var frekuensi_kumulatif = 0;
+			var frekuensi_kumulatif_sebelumnya = 0;
+			var frekuensi_saat_ini = 0;
+			var i;
+			for(i=1;i<tabel_median_kelompok_length;i++)
+			{
+				median_kelompok_frekuensi_total+= parseFloat( $('#tabel-median-kelompok tbody').find('.td_median_kelompok_frekuensi:eq('+(i-1)+')').text() );
+				$('#tabel-median-kelompok tbody').find('.td_median_kelompok_frekuensi_kumulatif:eq('+(i-1)+')').text(median_kelompok_frekuensi_total);
+			}
+
+			setengah_median_kelompok_frekuensi_total+=median_kelompok_frekuensi_total/2;
+			for(i=1;i<tabel_median_kelompok_length;i++)
+			{
+				temp_median_kelompok_frekuensi_total+= parseFloat( $('#tabel-median-kelompok tbody').find('.td_median_kelompok_frekuensi:eq('+(i-1)+')').text() );
+				if(temp_median_kelompok_frekuensi_total>=setengah_median_kelompok_frekuensi_total)
+				{
+					stop_target_median+=1;
+				}
+				else if(temp_median_kelompok_frekuensi_total<setengah_median_kelompok_frekuensi_total)
+				{
+
+				}
+				if(stop_target_median>=1)
+				{
+					index_target_median = i;
+					break;
+				}
+			}
+			
+			tepi_batas_bawah_median_kelompok = parseFloat( $('#tabel-median-kelompok tbody').find('.td_median_kelompok_batas_bawah:eq('+(index_target_median-1)+')').text() )-0.5;
+			frekuensi_sebelumnya = parseFloat( $('#tabel-median-kelompok tbody').find('.td_median_kelompok_frekuensi:eq('+(index_target_median-2)+')').text() );
+			frekuensi_sekarang = parseFloat( $('#tabel-median-kelompok tbody').find('.td_median_kelompok_frekuensi:eq('+(index_target_median-1)+')').text() );
+			frekuensi_kumulatif_sebelumnya = parseFloat( $('#tabel-median-kelompok tbody').find('.td_median_kelompok_frekuensi_kumulatif:eq('+(index_target_median-2)+')').text() );
+			var hasil = tepi_batas_bawah_median_kelompok+((((setengah_median_kelompok_frekuensi_total-frekuensi_kumulatif_sebelumnya)/frekuensi_sekarang)*frekuensi_sebelumnya));
+			alert('frekunsi median: '+median_kelompok_frekuensi_total+';\nsetengah frekuensi median: '+setengah_median_kelompok_frekuensi_total+';\ntemp frekuensi median: '+temp_median_kelompok_frekuensi_total+';\nindex target median: '+index_target_median+';\ntepi batas bawah: '+tepi_batas_bawah_median_kelompok+';\nfrekuensi sebelumnya: '+frekuensi_sebelumnya+';\nfrekuensi kumulatif sebelumnya: '+frekuensi_kumulatif_sebelumnya+';\nhasilnya: '+hasil);
+			$('#info-median-kelompok').html('Nilai Median: '+hasil);
+		}
+</script>
+<script type="text/javascript" src="scripts/framelessmenu.js"></script>
+</body>
+</html>

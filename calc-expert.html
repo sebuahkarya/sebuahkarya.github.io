@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Kalkulator Expert</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="css/index.css">
+	<link rel="stylesheet" type="text/css" href="fontawesome/css/all.css">
+	<script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+	<script type="text/javascript" src="jquery/jquery.js"></script>
+</head>
+<body>
+	<div class="header-dragable"></div>
+<div class="header">
+	<div class="header-title">Kalkulator Expert</div>
+	<a class="header-back-button" href="index.html">Kembali</a>
+</div>
+<div class="container" style="margin-top: 64px;">
+	Rumus<br>
+	<input type="text" class="input-large" name="" id="rumus">
+	<p></p>
+	Hasil<br>
+	<input type="text" class="input-large" name="" readonly="true" id="hasil">
+</div>
+<div class="container"><button class="button1-full" id="clear">Bersihkan</button></div>
+<script type="text/javascript">
+	function clear()
+	{
+		$('#rumus').val('');
+		$('#hasil').val('');
+	}
+
+	function hitung()
+	{
+		rumus = $('#rumus').val();
+		var hasil = eval(rumus);
+		$('#hasil').val(hasil);
+	}
+
+	$('#rumus').on('input change', function()
+	{
+		hitung();
+	}
+	);
+
+	$('#clear').click(function() {
+		clear();
+	});
+</script>
+<script type="text/javascript" src="scripts/framelessmenu.js"></script>
+</body>
+</html>

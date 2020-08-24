@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>String / Password Generator</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="css/index.css">
+	<link rel="stylesheet" type="text/css" href="fontawesome/css/all.css">
+	<script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+	<script type="text/javascript" src="jquery/jquery.js"></script>
+	<script type="text/javascript" src="mathjs/math.js"></script>
+</head>
+<body>
+	<div class="header-dragable"></div>
+<div class="header">
+	<div class="header-title">String / Password Generator</div>
+	<a class="header-back-button" href="index.html">Kembali</a>
+</div>
+<div class="container">
+Kumpulan String<br>
+<input class="input-large" type="text" name="" id="strings">
+<p></p>
+<button class="button1-full" id="default">Default</button>
+<p></p>
+Banyak Karakter Diambil<br>
+<input class="input-large" type="number" name="" id="characters">
+<p></p>
+<button class="button1-full" id="generate">Generate</button>
+<p></p>
+<button class="button2-full" id="clear">Clear</button>
+<p></p>
+Hasil<br>
+<input class="input-large" readonly="true" type="text" name="" id="result">
+</div>
+<script src="scripts/initialize.js"></script>
+<script type="text/javascript">
+
+	function defaultvalue()
+	{
+		$('#strings').val('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123567890');
+	}
+
+	function generate()
+	{
+		var i, j;
+		if(($('#strings').val().length<1))
+		{
+			defaultvalue();
+		}
+		var strings = $('#strings').val();
+		var characters = $('#characters').val();
+		if(characters>strings.length)
+		{
+			// characters = strings.length;
+			// $('#characters').val(characters);
+		}
+		else if(characters<1)
+		{
+			characters=1;
+			$('#characters').val(characters);
+		}
+		var arraystrings=[];
+		var arraygeneratedstrings=[];
+		var generatedstrings = '';
+		// alert(strings+'+'+characters);
+		for(i=0;i<strings.length;i++)
+		{
+			arraystrings[i] = strings[i].split();
+		}
+		for(i=0; i<characters;i++)
+		{
+			var randomindex = Math.floor(Math.random() * ((arraystrings.length-1) + 1 - 0)) + 0;		
+			arraygeneratedstrings[i]=arraystrings[randomindex];
+			generatedstrings+=arraygeneratedstrings[i];
+		}
+		$('#result').val(generatedstrings);
+	}
+
+	$('#generate').on('click', function()
+	{
+		generate();
+	}
+	);
+
+	$('#default').on('click', function()
+	{
+		defaultvalue();
+	}
+	);
+
+	$('#clear').on('click', function()
+	{
+		$('#strings').val('');
+		$('#characters').val('');
+	}
+	);
+
+	$('#characters').on('input change', function()
+	{
+		var strings = $('#strings').val();
+		var characters = $('#characters').val();
+		if(characters>strings.length)
+		{
+			// characters = strings.length;
+			$('#characters').val(characters);
+		}
+		else if(characters<1)
+		{
+			characters=1;
+			// $('#characters').val(characters);
+		}
+	}
+	);
+</script>
+<script type="text/javascript" src="scripts/framelessmenu.js"></script>
+</body>
+</html>

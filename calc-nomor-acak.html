@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Nomor Acak</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="css/index.css">
+	<link rel="stylesheet" type="text/css" href="fontawesome/css/all.css">
+	<script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+	<script type="text/javascript" src="jquery/jquery.js"></script>
+</head>
+<body>
+	<div class="header-dragable"></div>
+<div class="header">
+	<div class="header-title">Nomor Acak</div>
+	<a class="header-back-button" href="index.html">Kembali</a>
+</div>
+<div class="container" style="margin-top: 64px;">
+	Dari Angka<br>
+	<input type="number" class="input-large" name="" id="nilai-awal">
+	<p></p>
+	Hingga Angka<br>
+	<input type="number" class="input-large" name="" id="nilai-akhir">
+	<p></p>
+	Banyak Nilai Yang Diambil<br>
+	<input type="number" class="input-large" name="" id="nilai-diambil">
+	<p></p>
+	<input type="checkbox" name="" id="nilai-sama">
+	<label for="nilai-sama">Perbolehkan Nilai Yang Sama</label>
+	<p></p>
+	<button class="button1" type="button" id="generate">Acak</button>
+	<p></p>
+	Angka Yang Diambil<br>
+	<!-- <input type="text" class="input-large" name="" readonly="true" id="hasil"> -->
+	<div class="container-hasil-limited" id="hasil"></div>
+</div>
+<script type="text/javascript">
+	
+	$(document).ready(function() {
+		$('#nilai-sama').prop('checked', true);
+	});
+
+	function generate()
+	{
+		var i=0;
+		var j=0;
+		var k=0;
+		var array_hasil=[];
+		var array_hasil2=[];
+		var tempnilaiawal, tempnilaiakhir;
+		var nilaiawal = parseInt($('#nilai-awal').val());
+		var nilaiakhir = parseInt($('#nilai-akhir').val());
+		var nilaidiambil = parseInt($('#nilai-diambil').val());
+		if (nilaiakhir<nilaiawal)
+		{
+			tempnilaiawal = nilaiawal;
+			tempnilaiakhir = nilaiakhir;
+			nilaiawal = tempnilaiakhir;
+			nilaiakhir = tempnilaiawal;
+		}
+		if(nilaidiambil>(nilaiakhir-nilaiawal))
+		{
+			nilaidiambil = (nilaiakhir-nilaiawal)+1;
+		}
+
+		if($('#nilai-sama').is(':checked'))
+		{
+			for(i=0; i<nilaidiambil; i++)
+			{
+				var hasil = Math.floor(Math.random() * (nilaiakhir + 1 - nilaiawal)) + nilaiawal;			
+				array_hasil[i]= hasil;
+			}		
+		}
+		else
+		{
+			for(i=0; i<nilaidiambil; i++)
+			{
+				do
+				{
+					var hasil = Math.floor(Math.random() * (nilaiakhir + 1 - nilaiawal)) + nilaiawal;
+				}while(array_hasil.includes(hasil))
+			
+			array_hasil[i]= hasil;
+			}		
+		}
+		$('#hasil').text(array_hasil);	
+	}
+
+	$('#nilai-awal').on('input change', function()
+	{
+		generate();
+	}
+	);
+	$('#nilai-akhir').on('input change', function()
+	{
+		generate();
+	}
+	);
+	$('#nilai-diambil').on('input change', function()
+	{
+		generate();
+	}
+	);
+	$('#generate').on('click', function()
+	{
+		generate();
+	}
+	);
+
+	$('#nilai-sama').on('input change click', function()
+	{
+		generate();
+	}
+	);
+</script>
+<script type="text/javascript" src="scripts/framelessmenu.js"></script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Peningkatan</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="css/index.css">
+	<link rel="stylesheet" type="text/css" href="fontawesome/css/all.css">
+	<script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+	<script type="text/javascript" src="jquery/jquery.js"></script>
+</head>
+<body>
+	<div class="header-dragable"></div>
+<div class="header">
+	<div class="header-title">Peningkatan</div>
+	<a class="header-back-button" href="index.html">Kembali</a>
+</div>
+<div class="container" style="margin-top: 64px;">
+	Nilai Awal<br>
+	<input type="number" class="input-large type-number" name="" id="nilai-awal">
+	<p></p>
+	Peningkatan(%)<br>
+	<input type="number" class="input-large type-number" name="" id="nilai-peningkatan-persen">
+	<p></p>
+	Peningkatan<br>
+	<input type="number" class="input-large type-number" name="" id="nilai-peningkatan" readonly="true">
+	<p></p>
+	Hasil Akhir<br>
+	<input type="number" class="input-large type-number" name="" id="nilai-akhir" readonly="true">
+	<p></p>
+</div>
+<script type="text/javascript">
+	
+	function hitung()
+	{
+		var nilaiawal = parseFloat($('#nilai-awal').val());
+		var Peningkatanpersen = parseFloat($('#nilai-peningkatan-persen').val());
+		var peningkatan = ((nilaiawal * Peningkatanpersen) / 100);
+		var nilaiakhir = nilaiawal + ((nilaiawal * Peningkatanpersen) / 100);
+		$('#nilai-peningkatan').val(peningkatan);
+		$('#nilai-akhir').val(nilaiakhir);
+	}
+
+	$('#nilai-awal').on('input change', function()
+	{
+		hitung();	
+	}
+	);
+
+	$('#nilai-peningkatan-persen').on('input change', function()
+	{
+		hitung();
+	}
+	);
+
+</script>
+<script src="scripts/allow-only-number.js"></script>
+<script type="text/javascript" src="scripts/framelessmenu.js"></script>
+</body>
+</html>
