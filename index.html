@@ -103,7 +103,7 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-md bg-primary navbar-dark fixed-top">
-  <a class="navbar-brand" href="#">Kalkulator+</a>
+  <a class="navbar-brand" href="#"><b>Kalkulator</b></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -130,9 +130,11 @@
     </div>  
     </div>
     <p></p>
-    <div class="btn-group text-center m-auto" role="group">
-      <button type="button" class="btn btn-primary" id="sortAZ">Sortir <i class="fa fa-sort-alpha-down"></i></button>
-      <button type="button" class="btn btn-primary" id="sortZA">Sortir <i class="fa fa-sort-alpha-up-alt"></i></button>
+    <div class="table-responsive text-center">
+      <div class="btn-group m-auto" role="group">
+        <button type="button" class="btn btn-primary" id="sortAZ">Sortir <i class="fa fa-sort-alpha-down"></i></button>
+        <button type="button" class="btn btn-primary" id="sortZA">Sortir <i class="fa fa-sort-alpha-up-alt"></i></button>
+      </div>
     </div>
 </div>
 
@@ -194,9 +196,9 @@
     </div>
  </div>
 
-  <div class="MenuKalkulatorItem card my-2" data-name="Grade & Nilai">
+  <div class="MenuKalkulatorItem card my-2" data-name="Tingkatan dan Nilai">
     <div class="card-body">
-      <a class="stretched-link" href="calc-grade-dan-nilai.html">Grade & Nilai</a>
+      <a class="stretched-link" href="calc-grade-dan-nilai.html">Tingkatan dan Nilai</a>
     </div>
  </div>
 
@@ -230,6 +232,12 @@
     </div>
  </div>
 
+ <div class="MenuKalkulatorItem card my-2" data-name="String / Password Generator">
+    <div class="card-body">      
+      <a class="stretched-link" href="calc-persentasi-data.html">Persentase Data</a>
+    </div>
+ </div>
+
 </div>
 
 <div class="btn-widget" id="btn-widget">
@@ -249,7 +257,6 @@
 <script type="text/javascript" src="plugins/jquery/jquery.js"></script>
 <script type="text/javascript" src="plugins/popperjs/popper.js"></script>
 <script type="text/javascript" src="plugins/bootstrap/js/bootstrap.js"></script>
-<script type="text/javascript" src="scripts/framelessmenu.js"></script>
 <script type="text/javascript">
 $(document).ready(function()
 {

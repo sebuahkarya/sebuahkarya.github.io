@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Faktorial</title>
+	<title>Ganjil Genap</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<link rel="stylesheet" type="text/css" href="plugins/bootstrap/css/bootstrap.css">
@@ -10,7 +10,7 @@
 <body>
 <nav class="navbar navbar-expand-md bg-primary navbar-dark fixed-top">
   <a class="navbar-brand" href="index.html"><i class="fa fa-arrow-left"></i></a>
-  <a class="navbar-brand" href="#">Faktorial</a>
+  <a class="navbar-brand" href="#"><b>Ganjil Genap</b></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -30,25 +30,30 @@
 </nav>
 
 <div class="container" style="margin-top: 5rem;">
+	<h5><b>Input (Ganjil | Genap)</b></h5>
 	Dari Angka<br>
 	<input type="number" class="form-control" name="" id="nilai-awal">
 	<p></p>
 	Hingga Angka<br>
 	<input type="number" class="form-control" name="" id="nilai-akhir">
 	<p></p>
-	Pilihan: <br>
-	<label class="checkbox-label">Ganjil
-	<input class="form-control" type="checkbox" id="pilih-ganjil">
-	<span class="checkbox-mark"></span>
-	</label>
+	Pilihan:<br>
+	<div class="checkbox mt-2">
+		<label class="checkbox-label">
+			<input type="checkbox" id="pilih-ganjil">Ganjil
+		</label>
+	</div>
+	
+	<div class="checkbox">
+		<label class="checkbox-label">
+			<input type="checkbox" id="pilih-genap">Genap
+		</label>
+	</div>
 	<p></p>
-	<label class="checkbox-label">Genap
-	<input class="form-control" type="checkbox" id="pilih-genap">
-	<span class="checkbox-mark"></span>
-	</label>
-	<p></p>
-	Hasil<br>
-	<div class="container-hasil-free" id="hasil">
+</div>
+<div class="container" style="margin-top: 1rem">
+	<h5><b>Hasil</b></h5>
+	<div class="container px-1" id="hasil">
 		
 	</div>
 </div>

@@ -1,27 +1,64 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 	<title>Kalkulator Expert</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" type="text/css" href="css/index.css">
-	<link rel="stylesheet" type="text/css" href="fontawesome/css/all.css">
-	<script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
-	<script type="text/javascript" src="jquery/jquery.js"></script>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" type="text/css" href="plugins/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="plugins/fontawesome/css/all.min.css">
 </head>
 <body>
-	<div class="header-dragable"></div>
-<div class="header">
-	<div class="header-title">Kalkulator Expert</div>
-	<a class="header-back-button" href="index.html">Kembali</a>
-</div>
-<div class="container" style="margin-top: 64px;">
+
+<nav class="navbar navbar-expand-md bg-primary navbar-dark fixed-top">
+  <a class="navbar-brand" href="index.html"><i class="fa fa-arrow-left"></i></a>
+  <a class="navbar-brand" href="#">Kalkulator Expert</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="collapsibleNavbar">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="index.html">Menu Utama</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="settings.html">Pengaturan</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="about.html">Tentang Aplikasi</a>
+      </li>    
+    </ul>
+  </div>  
+</nav>
+
+<div class="container" style="margin-top: 5rem;">
 	Rumus<br>
-	<input type="text" class="input-large" name="" id="rumus">
+	<input type="text" class="form-control" name="" id="rumus">
 	<p></p>
 	Hasil<br>
-	<input type="text" class="input-large" name="" readonly="true" id="hasil">
+	<input type="text" class="form-control" name="" readonly="true" id="hasil">
+	<p></p>
+	<button class="btn btn-primary btn-block" id="clear">Bersihkan</button>
 </div>
-<div class="container"><button class="button1-full" id="clear">Bersihkan</button></div>
+
+<div class="container" style="margin-top: 5rem;">
+	<h3>Operator</h3>
+	~ "+" = Penjumlahan<br>
+	~ "-" = Pengurangan<br>
+	~ "*" = Perkalian<br>
+	~ "/" = Pembagian<br>
+	~ "%" = Modulus<br>
+	<p></p>
+	<h5>Contoh</h5>
+	(2+2)*5<br>
+	Hasil: 20
+</div>
+
+</body>
+<script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+<script type="text/javascript" src="plugins/jquery/jquery.js"></script>
+<script type="text/javascript" src="plugins/popperjs/popper.js"></script>
+<script type="text/javascript" src="plugins/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="plugins/mathjs/math.js"></script>
 <script type="text/javascript">
 	function clear()
 	{
@@ -46,6 +83,4 @@
 		clear();
 	});
 </script>
-<script type="text/javascript" src="scripts/framelessmenu.js"></script>
-</body>
 </html>
