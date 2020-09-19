@@ -94,19 +94,28 @@
 	<div class="" id="containerdatatable">
 		
 	</div>
-	<div class="table-responsive">
-		<table id="keranjang-belanja" class="table table-bordered table-hover">
-			<tbody>
-				<thead class="bg-primary text-light">
-					<th class="align-text" id="pilih_header">Pilih</th>
-					<th class="align-text" id="namabarang_header">Nama</th>
-					<th class="text-right" id="hargabarang_header">Harga</th>
-					<th class="text-right" id="jumlahbarang_header">Jumlah</th>
-					<th class="text-right" id="totalhargabarang_header">Total</th>
-					<th class="text-center">Pilihan</th>
-				</thead>
-			</tbody>
-		</table>
+
+	<div class="container" id="printable">
+		<div class="table-responsive">
+			<table id="keranjang-belanja" class="table table-bordered table-hover">
+				<tbody>
+					<thead class="bg-primary text-light">
+						<tr>
+							<th class="align-text" id="pilih_header">Pilih</th>
+							<th class="align-text" id="namabarang_header">Nama</th>
+							<th class="text-right" id="hargabarang_header">Harga</th>
+							<th class="text-right" id="jumlahbarang_header">Jumlah</th>
+							<th class="text-right" id="totalhargabarang_header">Total</th>
+							<th class="text-center">Pilihan</th>
+						</tr>
+					</thead>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<p></p>
+	<div class="container mt-5">
+		<button class="btn btn-primary" id="btn-savetopdf">Simpan Sebagai PDF</button>
 	</div>
 	<p></p>
 	<div class="container mt-5 text-right" id="hasil" style=" border-top: dashed 2px #999; font-weight: bold;">
@@ -118,11 +127,12 @@
 <script type="text/javascript" src="plugins/jquery/jquery.js"></script>
 <script type="text/javascript" src="plugins/popperjs/popper.js"></script>
 <script type="text/javascript" src="plugins/bootstrap/js/bootstrap.js"></script>
-<script type="text/javascript" src="scripts/framelessmenu.js"></script>
 <script type="text/javascript" src="plugins/accountingjs/accounting.js"></script>
 <script type="text/javascript" src="scripts/allow-only-number.js"></script>
 <script type="text/javascript" src="scripts/formatuang.js"></script>
-<script type="text/javascript" src="scripts/framelessmenu.js"></script>
+<script src="plugins/jspdf/dist/jspdf.min.js"></script>
+<script type="text/javascript" src="plugins/jspdfautotable/dist/jspdf.plugin.autotable.min.js"></script>
+<script type="text/javascript" src="plugins/tablehtmlexport/tableHTMLExport.js"></script>
 <script type="text/javascript">
 	var array_pilihbaris = [];
 	var array_namabarang = [];
@@ -262,7 +272,7 @@
 		}
 		
 		
-		$('#keranjang-belanja tbody').append('<tr><td><input type="checkbox" class="pilihbaris"></td><td class="align-text td-nama-barang" contenteditable="false">'+namabarang+'</td><td class="text-right td-harga-barang floatTextBox" contenteditable="false">'+accounting.formatMoney(hargabarang, "Rp", 0, ".", ",")+'</td><td class="text-right td-jumlah-barang floatTextBox" contenteditable="false">'+jumlahbarang+'</td><td class="text-right total"></td><td class="text-center"><div class="btn-group"><button class="ubah btn btn-primary" data-toggle="modal" data-target="#modal-editdialog">Ubah</button><button class="hapus btn btn-danger">Hapus</button></div></td></tr>');
+		$('#keranjang-belanja tbody').append('<tr><td><input type="checkbox" class="pilihbaris"></td><td class="align-text td-nama-barang" contenteditable="false">'+namabarang+'</td><td class="text-right td-harga-barang text-nowrap floatTextBox" contenteditable="false">'+accounting.formatMoney(hargabarang, "Rp", 0, ".", ",")+'</td><td class="text-right td-jumlah-barang floatTextBox" contenteditable="false">'+jumlahbarang+'</td><td class="text-right total"></td><td class="text-center"><div class="btn-group"><button class="ubah btn btn-primary" data-toggle="modal" data-target="#modal-editdialog">Ubah</button><button class="hapus btn btn-danger">Hapus</button></div></td></tr>');
 		hitung();
 		if($('#chk-bersihkan-input').is(':checked'))
 		{
@@ -417,41 +427,10 @@
 	}
 	);
 
-//sort table
-	var table = $('#keranjang-belanja');
-    
-    $('#namabarang_header')
-        .wrapInner('<span title="sort this column"/>')
-        .each(function(){
-            
-            var th = $(this),
-                thIndex = th.index(),
-                inverse = false;
-            
-            th.click(function(){
-                
-                table.find('td').filter(function(){
-                    
-                    return $(this).index() === thIndex;
-                    
-                }).sortElements(function(a, b){
-                    
-                    return $.text([a]) > $.text([b]) ?
-                        inverse ? -1 : 1
-                        : inverse ? 1 : -1;
-                    
-                }, function(){
-                    
-                    // parentNode is the element we want to move
-                    return this.parentNode; 
-                    
-                });
-                
-                inverse = !inverse;
-                    
-            });
-                
-        });
+
+	$('#btn-savetopdf').on('click',function(){
+	    $("#keranjang-belanja").tableHTMLExport({type:'pdf',filename:'sample.pdf'});
+	  });
 
 </script>
 </html>
