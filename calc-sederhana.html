@@ -35,6 +35,7 @@
 </nav>
 
 <div class="container" style="margin-top: 5rem">
+	<h5><b>Input</b></h5>
 	<span id="lbl-nilai-pertama">Nilai Pertama</span><br>
 	<input type="number" class="input-large form-control" name="" id="nilai-pertama">
 	<p></p>
@@ -52,10 +53,11 @@
 	<span id="lbl-nilai-kedua">Nilai Kedua</span><br>
 	<input type="number" class="input-large form-control" name="" id="nilai-kedua" class="txt-nilai-kedua">
 	<p></p>
+	<h5><b>Output</b></h5>
 	Hasil<br>
 	<input type="number" class="input-large form-control" name="" readonly="true" id="nilai-hasil">
 	<p></p>
-	<button class="btn btn-danger btn-block" id="clear">Hitung</button>
+	<button class="btn btn-primary btn-block" id="hitung-refresh">Hitung</button>
 	<p></p>
 	<button class="btn btn-danger btn-block" id="clear">Bersihkan</button>
 </div>
@@ -65,7 +67,6 @@
 <script type="text/javascript" src="plugins/popperjs/popper.js"></script>
 <script type="text/javascript" src="plugins/bootstrap/js/bootstrap.js"></script>
 <script type="text/javascript" src="plugins/mathjs/math.js"></script>
-<script type="text/javascript" src="scripts/framelessmenu.js"></script>
 <script type="text/javascript">
 	function clear()
 	{
@@ -171,6 +172,10 @@
 
 	$('#clear').click(function(event) {
 		clear();
+	});
+
+	$('#hitung-refresh').click(function(event) {
+		hitung();
 	});
 </script>
 </html>

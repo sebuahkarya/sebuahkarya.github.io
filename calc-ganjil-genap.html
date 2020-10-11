@@ -40,19 +40,19 @@
 	Pilihan:<br>
 	<div class="checkbox mt-2">
 		<label class="checkbox-label">
-			<input type="checkbox" id="pilih-ganjil">Ganjil
+			<input type="checkbox" id="pilih-ganjil"> Ganjil
 		</label>
 	</div>
 	
 	<div class="checkbox">
 		<label class="checkbox-label">
-			<input type="checkbox" id="pilih-genap">Genap
+			<input type="checkbox" id="pilih-genap"> Genap
 		</label>
 	</div>
 	<p></p>
 </div>
 <div class="container" style="margin-top: 1rem">
-	<h5><b>Hasil</b></h5>
+	<h5><b>Output</b></h5>
 	<div class="container px-1" id="hasil">
 		
 	</div>
@@ -92,6 +92,20 @@
 			}
 		}
 		else if(nilaiawal>nilaiakhir)
+		{
+			for (i=nilaiawal;i>=nilaiakhir;i--)
+			{
+				if((i%2==1 || i%2==-1) & $('#pilih-ganjil').is(':checked'))
+				{
+				$('#hasil').append('Angka '+i+' = Ganjil<p></p>');
+				}
+				else if(i%2==0 & $('#pilih-genap').is(':checked'))
+				{
+				$('#hasil').append('Angka '+i+' = Genap<p></p>');
+				}
+			}
+		}
+		else if(nilaiawal==nilaiakhir)
 		{
 			for (i=nilaiawal;i>=nilaiakhir;i--)
 			{
